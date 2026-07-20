@@ -74,7 +74,7 @@ const altFeatures = [
   {
     tag: 'Share Anything',
     title: 'Your Entire World, One Tap Away',
-    body: 'Share contact details, social links, portfolios, meeting links, PDFs, and more — everything from a single Tapzy NFC tap. Always up to date, never outdated.',
+    body: 'Share contact details, social links, portfolios, meeting links, PDFs, and more. All from a single Tapzy NFC tap. Always up to date, never outdated.',
     bullets: ['Contact details', 'Social media profiles', 'Portfolio & brochures', 'Meeting & booking links'],
     visual: (
       <div className="relative w-full max-w-xs mx-auto px-6 pt-6 pb-4">
@@ -104,9 +104,9 @@ const altFeatures = [
   },
   {
     tag: 'Easy Networking',
-    title: '3 Ways to Connect — You Choose',
-    body: 'Tapzy meets people where they are. Whether they prefer a tap, a QR scan, or a quick link — you are always one moment away from a great first impression.',
-    bullets: ['NFC Tap — no app, instant', 'QR Code — scan from any camera', 'Link share — email, WhatsApp, DM'],
+    title: '3 Ways to Connect. You Choose',
+    body: 'Tapzy meets people where they are. Whether they prefer a tap, a QR scan, or a quick link, you are always one moment away from a great first impression.',
+    bullets: ['NFC Tap: no app, instant', 'QR Code: scan from any camera', 'Link share: email, WhatsApp, DM'],
     visual: (
       <div className="relative w-full max-w-sm mx-auto flex flex-col gap-4 py-4 overflow-hidden">
         {[
@@ -189,9 +189,9 @@ const testimonials = [
 ]
 
 const faqs = [
-  { q: 'What is an NFC business card?', a: 'An NFC business card contains a tiny chip that wirelessly shares your profile when tapped to a smartphone — no app required.' },
+  { q: 'What is an NFC business card?', a: 'An NFC business card contains a tiny chip that wirelessly shares your profile when tapped to a smartphone. No app required.' },
   { q: 'Does it work with iPhones?', a: 'Yes! Tapzy works with iPhone XS and newer (iOS 14+) and all modern Android devices.' },
-  { q: 'Can I update my information later?', a: 'Absolutely. Update your digital profile anytime from your dashboard — your physical card always shows the latest.' },
+  { q: 'Can I update my information later?', a: 'Absolutely. Update your digital profile anytime from your dashboard. Your physical card always shows the latest.' },
 ]
 
 function FAQItem({ q, a, index }) {

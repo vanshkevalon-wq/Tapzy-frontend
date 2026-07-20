@@ -63,7 +63,7 @@ const steps = [
         <Link to="/products" className="text-primary-600 font-semibold hover:underline">
           premium Tapzy NFC cards
         </Link>{' '}
-        — PVC, Social, Metal, or Standee. Pick the one that fits your style, choose your preferences, and place your order in seconds.
+        , PVC, Social, Metal, or Standee. Pick the one that fits your style, choose your preferences, and place your order in seconds.
       </>
     ),
   },
@@ -79,7 +79,7 @@ const steps = [
       <>
         Log in to your{' '}
         <strong className="text-plum font-semibold">Tapzy dashboard</strong>{' '}
-        using the credentials sent via WhatsApp. Fill in your name, company, phone, email, social links, portfolio, and more — everything under your{' '}
+        using the credentials sent via WhatsApp. Fill in your name, company, phone, email, social links, portfolio, and more. Everything is under your{' '}
         <Link to="/subscription-plans" className="text-primary-600 font-semibold hover:underline">
           subscription plan
         </Link>
@@ -90,7 +90,7 @@ const steps = [
   {
     Icon: IconWifi,
     title: 'Start Tapping with Tapzy',
-    body: "For NFC-enabled phones, hold your Tapzy card near the back of the phone — your profile opens instantly, no app needed. For non-NFC phones, just scan the QR code printed on the card. One tap or scan, and you're connected forever.",
+    body: "For NFC-enabled phones, hold your Tapzy card near the back of the phone. Your profile opens instantly, no app needed. For non-NFC phones, just scan the QR code printed on the card. One tap or scan, and you're connected forever.",
   },
 ]
 

@@ -304,12 +304,12 @@ function TapAnimation() {
    WHY CHOOSE TAPZY — bullet points
 ───────────────────────────────────────── */
 const points = [
-  { icon: 'workspace_premium', title: 'Two Print Finishes',        text: 'Choose from Standard or Premium Embossed — both crafted for professionals who want to stand out.' },
-  { icon: 'do_not_touch',      title: 'No More Paper Cards',        text: 'We solved a common problem — paper cards get lost, outdated, and wasted. Tapzy eliminates all three.' },
-  { icon: 'bolt',              title: 'Cutting-Edge Technology',    text: 'NFC chip technology enhances every connection — instant, accurate, and effortlessly modern.' },
+  { icon: 'workspace_premium', title: 'Two Print Finishes',        text: 'Choose from Standard or Premium Embossed, both crafted for professionals who want to stand out.' },
+  { icon: 'do_not_touch',      title: 'No More Paper Cards',        text: 'We solved a common problem. Paper cards get lost, outdated, and wasted. Tapzy eliminates all three.' },
+  { icon: 'bolt',              title: 'Cutting-Edge Technology',    text: 'NFC chip technology enhances every connection: instant, accurate, and effortlessly modern.' },
   { icon: 'currency_rupee',    title: 'Premium, Honest Pricing',    text: 'High-quality NFC business cards at very reasonable prices. No hidden fees, no surprises.' },
   { icon: 'palette',           title: 'Custom Design Support',      text: 'Our designers craft a card that perfectly matches your brand.', cta: true },
-  { icon: 'devices',           title: 'Works on Every Device',      text: 'Tap on any modern iPhone or Android — seamless connections every single time.' },
+  { icon: 'devices',           title: 'Works on Every Device',      text: 'Tap on any modern iPhone or Android. Seamless connections every single time.' },
 ]
 
 export default function WhyTapzy() {

@@ -6,7 +6,7 @@ import { PageLoader } from '../components/common/Loader'
 import SimilarProducts from '../components/products/SimilarProducts'
 
 const features = [
-  { icon: '⚡', label: 'Instant Share', desc: 'Tap and share — no app needed' },
+  { icon: '⚡', label: 'Instant Share', desc: 'Tap and share, no app needed' },
   { icon: '🔄', label: 'Live Updates', desc: 'Edit your info anytime, anywhere' },
   { icon: '📱', label: 'Universal', desc: 'Works on all modern phones' },
   { icon: '♻️', label: 'Eco-Friendly', desc: 'One card, zero reprints ever' },
@@ -206,7 +206,7 @@ export default function ProductDetail() {
 
             {/* Description */}
             <p className="text-plum/60 leading-relaxed text-sm mb-7 border-l-2 border-primary-200 pl-4">
-              {product.description || 'A premium NFC business card crafted for professionals who want to make every connection count. Tap once and share everything — forever.'}
+              {product.description || 'A premium NFC business card crafted for professionals who want to make every connection count. Tap once and share everything, forever.'}
             </p>
 
             {/* Tab switcher */}

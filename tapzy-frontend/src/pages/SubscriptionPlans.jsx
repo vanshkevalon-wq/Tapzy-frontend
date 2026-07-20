@@ -113,11 +113,11 @@ const plans = [
 const whyItems = [
   {
     q: 'Why do we charge a subscription?',
-    a: 'Running real-time profile servers, Cloudinary storage, NFC infrastructure, and WhatsApp support costs money. A small annual fee lets us keep the platform fast, secure, and constantly improving — without ads or selling your data.',
+    a: 'Running real-time profile servers, Cloudinary storage, NFC infrastructure, and WhatsApp support costs money. A small annual fee lets us keep the platform fast, secure, and constantly improving, without ads or selling your data.',
   },
   {
     q: 'Can I upgrade or downgrade my plan?',
-    a: 'You can upgrade at any time and the new features activate immediately. Downgrading takes effect at the end of your current billing cycle. Choose wisely — downgrading mid-cycle isn\'t available.',
+    a: 'You can upgrade at any time and the new features activate immediately. Downgrading takes effect at the end of your current billing cycle. Note: downgrading mid-cycle isn\'t available.',
   },
   {
     q: 'What payment methods do you accept?',
@@ -293,7 +293,7 @@ export default function SubscriptionPlans() {
             </div>
             <p className="text-sm text-plum/60 leading-relaxed">
               Running real-time profile servers, cloud storage, NFC infrastructure, and WhatsApp support has real costs.
-              A small annual fee lets us keep the platform fast, reliable, and ad-free —
+              A small annual fee lets us keep the platform fast, reliable, and ad-free,
               <strong className="text-plum/80"> without ever selling your data.</strong> We believe in honest pricing over hidden monetisation.
             </p>
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -351,7 +351,7 @@ export default function SubscriptionPlans() {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-3xl font-extrabold text-white mb-3">Still not sure which plan?</h2>
             <p className="text-white/70 text-sm mb-7 max-w-md mx-auto">
-              Start with Starter — it's free forever. Upgrade when you need more power.
+              Start with Starter. It's free forever. Upgrade when you need more power.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <Link to="/contact"
