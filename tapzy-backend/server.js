@@ -26,20 +26,21 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // ── Health Check ──────────────────────────────────────────────────────────────
-app.get('/', (req, res) => {
-  res.json({
-    status:  'ok',
-    message: 'Tapzy API is running',
-    version: '1.0.0',
-    routes: {
-      auth:     '/api/auth',
-      products: '/api/products',
-      contact:  '/api/contact',
-      upload:   '/api/upload',
-      stats:    '/api/admin/stats',
-    },
-  })
-})
+const healthPayload = {
+  status:  'ok',
+  message: 'Tapzy API is running',
+  version: '1.0.0',
+  routes: {
+    auth:     '/api/auth',
+    products: '/api/products',
+    contact:  '/api/contact',
+    upload:   '/api/upload',
+    stats:    '/api/admin/stats',
+  },
+}
+
+app.get('/',    (_req, res) => res.json(healthPayload))
+app.get('/api', (_req, res) => res.json(healthPayload))
 
 // ── API Routes ─────────────────────────────────────────────────────────────────
 app.use('/api/auth',     authRoutes)
