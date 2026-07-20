@@ -25,6 +25,22 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// ── Health Check ──────────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({
+    status:  'ok',
+    message: 'Tapzy API is running',
+    version: '1.0.0',
+    routes: {
+      auth:     '/api/auth',
+      products: '/api/products',
+      contact:  '/api/contact',
+      upload:   '/api/upload',
+      stats:    '/api/admin/stats',
+    },
+  })
+})
+
 // ── API Routes ─────────────────────────────────────────────────────────────────
 app.use('/api/auth',     authRoutes)
 app.use('/api/products', productRoutes)
