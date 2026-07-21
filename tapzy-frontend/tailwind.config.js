@@ -51,11 +51,16 @@ export default {
       animation: {
         'float': 'float 6s ease-in-out infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4,0,0.6,1) infinite',
+        'fade-in-down': 'fadeInDown 0.35s ease both',
       },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%':      { transform: 'translateY(-12px)' },
+        },
+        fadeInDown: {
+          '0%':   { opacity: '0', transform: 'translate(-50%, -16px)' },
+          '100%': { opacity: '1', transform: 'translate(-50%, 0)' },
         },
       },
     },

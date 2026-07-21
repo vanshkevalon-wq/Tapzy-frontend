@@ -10,7 +10,11 @@ const api = axios.create({
 
 // Attach auth token + handle FormData content-type
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('tapzy_token')
+  // Check both admin token and user token
+  const adminToken = localStorage.getItem('tapzy_token')
+  const userToken  = localStorage.getItem('tapzy_user_token')
+  const token = adminToken || userToken
+  
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
@@ -26,8 +30,14 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('tapzy_token')
-      window.location.href = '/admin/login'
+      const isAdminRoute = error.config?.url?.includes('/auth/') || 
+                           error.config?.url?.includes('/admin/')
+      const hasAdminToken = !!localStorage.getItem('tapzy_token')
+
+      if (hasAdminToken && isAdminRoute) {
+        localStorage.removeItem('tapzy_token')
+        window.location.href = '/admin/login'
+      }
     }
     return Promise.reject(error)
   }

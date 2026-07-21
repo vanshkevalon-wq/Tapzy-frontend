@@ -21,6 +21,11 @@ const navItems = [
     icon: <span className="icon text-xl flex-shrink-0">mail</span>,
   },
   {
+    to: '/admin/users',
+    label: 'Users',
+    icon: <span className="icon text-xl flex-shrink-0">group</span>,
+  },
+  {
     to: '/admin/profile',
     label: 'Profile',
     icon: <span className="icon text-xl flex-shrink-0">manage_accounts</span>,

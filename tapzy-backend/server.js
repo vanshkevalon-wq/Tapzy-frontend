@@ -11,6 +11,7 @@ const { getStats }       = require('./controllers/contactController')
 const authRoutes    = require('./routes/authRoutes')
 const productRoutes = require('./routes/productRoutes')
 const contactRoutes = require('./routes/contactRoutes')
+const userRoutes    = require('./routes/userRoutes')
 
 // ── Connect DB ─────────────────────────────────────────────────────────────────
 connectDB()
@@ -57,6 +58,7 @@ app.get('/api', (_req, res) => res.json(healthPayload))
 app.use('/api/auth',     authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/contact',  contactRoutes)
+app.use('/api/users',    userRoutes)
 
 // Legacy single-image upload endpoint (kept for backwards compat)
 // POST /api/upload  { image: File }  →  { url, publicId }

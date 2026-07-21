@@ -9,6 +9,19 @@ const navLinks = [
   { to: '/contact', label: 'Contact' },
 ]
 
+const policies = [
+  { to: '/policy/compatible-phone', label: 'Compatible Phone' },
+  { to: '/policy/delivery', label: 'Delivery' },
+  { to: '/policy/privacy', label: 'Privacy Policy' },
+  { to: '/policy/refund', label: 'Refund Policy' },
+  { to: '/policy/shipping', label: 'Shipping Policy' },
+  { to: '/policy/subscription', label: 'Subscription Policy' },
+  { to: '/policy/data-security', label: 'Data Security Policy' },
+  { to: '/policy/terms-of-service', label: 'Terms of Service' },
+  { to: '/policy/return', label: 'Return Policy' },
+  { to: '/policy/international-shipping', label: 'International Shipping Policy' },
+]
+
 const socials = [
   {
     label: 'Instagram',
@@ -46,7 +59,7 @@ export default function Footer() {
       <div className="h-1 bg-brand-gradient" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="md:col-span-2">
             <TapzyLogo variant="dark" height={44} />
@@ -74,6 +87,25 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2.5">
               {navLinks.map(({ to, label }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="text-sm hover:text-primary-400 transition-colors"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Policy */}
+          <div>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              Policy
+            </h3>
+            <ul className="space-y-2.5">
+              {policies.map(({ to, label }) => (
                 <li key={to}>
                   <Link
                     to={to}

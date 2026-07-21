@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import TapzyLogo from '../common/TapzyLogo'
 import { useCart } from '../../context/CartContext'
+import { useUserAuth } from '../../context/UserAuthContext'
+import AuthDrawer from '../auth/AuthDrawer'
 
 const links = [
   { to: '/',         label: 'Home' },
@@ -11,13 +13,13 @@ const links = [
   { to: '/contact',  label: 'Contact' },
 ]
 
-// Temporary cart count — replace with real cart context later
-const totalItems = 2
-
 export default function Navbar() {
-  const [open, setOpen]         = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen]           = useState(false)
+  const [scrolled, setScrolled]   = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [authOpen, setAuthOpen]   = useState(false)
   const { totalItems } = useCart()
+  const { user } = useUserAuth()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -33,6 +35,7 @@ export default function Navbar() {
   }, [])
 
   return (
+    <>
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-500 ${
         scrolled
@@ -86,13 +89,44 @@ export default function Navbar() {
           </nav>
 
           {/* ── Right-side actions ── */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1 shrink-0">
 
-            {/* Cart button */}
+            {/* Search icon */}
+            <button
+              onClick={() => setSearchOpen(!searchOpen)}
+              aria-label="Search"
+              className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <span className="icon text-[22px] leading-none">search</span>
+            </button>
+
+            {/* Wishlist icon */}
+            <button
+              aria-label="Wishlist"
+              className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <span className="icon text-[22px] leading-none">favorite_border</span>
+            </button>
+
+            {/* Profile icon */}
+            <button
+              onClick={() => setAuthOpen(true)}
+              aria-label="Profile"
+              className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <span className="icon text-[22px] leading-none">
+                {user ? 'account_circle' : 'person_outline'}
+              </span>
+              {user && (
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-400 border-2 border-plum" />
+              )}
+            </button>
+
+            {/* Cart icon */}
             <Link
               to="/cart"
               aria-label={`Cart — ${totalItems} items`}
-              className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200 group"
+              className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
             >
               <span className="icon text-[22px] leading-none">shopping_cart</span>
               {totalItems > 0 && (
@@ -100,18 +134,6 @@ export default function Navbar() {
                   {totalItems}
                 </span>
               )}
-            </Link>
-
-            {/* Divider */}
-            <span className="hidden md:block w-px h-6 bg-white/15 rounded-full" />
-
-            {/* CTA — Get Your Card */}
-            <Link
-              to="/products"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold text-white bg-brand-gradient shadow-glow-sm hover:shadow-glow hover:scale-[1.03] active:scale-100 transition-all duration-200 tracking-wide"
-            >
-              <span className="icon text-base leading-none">nfc</span>
-              Get Your Card
             </Link>
 
             {/* Mobile: cart icon */}
@@ -173,19 +195,61 @@ export default function Navbar() {
             </NavLink>
           ))}
 
-          {/* Mobile CTA */}
-          <div className="pt-2 flex items-center gap-2">
-            <Link
-              to="/products"
-              onClick={() => setOpen(false)}
-              className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-white bg-brand-gradient shadow-glow-sm active:scale-95 transition-all duration-200 tracking-wide"
+          {/* Mobile CTA — icon row */}
+          <div className="pt-2 flex items-center justify-around border-t border-white/10">
+            <button
+              onClick={() => { setSearchOpen(!searchOpen); setOpen(false) }}
+              aria-label="Search"
+              className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
             >
-              <span className="icon text-base leading-none">nfc</span>
-              Get Your Card
+              <span className="icon text-xl leading-none">search</span>
+              <span className="text-[10px] font-medium">Search</span>
+            </button>
+            <button
+              aria-label="Wishlist"
+              className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <span className="icon text-xl leading-none">favorite_border</span>
+              <span className="text-[10px] font-medium">Wishlist</span>
+            </button>
+            <button
+              onClick={() => { setAuthOpen(true); setOpen(false) }}
+              aria-label="Profile"
+              className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <span className="relative">
+                <span className="icon text-xl leading-none">
+                  {user ? 'account_circle' : 'person_outline'}
+                </span>
+                {user && (
+                  <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-green-400" />
+                )}
+              </span>
+              <span className="text-[10px] font-medium">Profile</span>
+            </button>
+            <Link
+              to="/cart"
+              onClick={() => setOpen(false)}
+              aria-label={`Cart — ${totalItems} items`}
+              className="relative flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              <span className="relative">
+                <span className="icon text-xl leading-none">shopping_cart</span>
+                {totalItems > 0 && (
+                  <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-[16px] px-0.5 rounded-full bg-brand-gradient text-white text-[9px] font-bold leading-none">
+                    {totalItems}
+                  </span>
+                )}
+              </span>
+              <span className="text-[10px] font-medium">Cart</span>
             </Link>
           </div>
         </div>
       </div>
     </header>
+
+    {/* ── Auth Drawer ── */}
+    <AuthDrawer open={authOpen} onClose={() => setAuthOpen(false)} />
+  </>
   )
 }
