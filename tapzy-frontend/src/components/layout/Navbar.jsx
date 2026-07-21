@@ -41,40 +41,24 @@ export default function Navbar() {
     <>
     <div className="sticky top-0 z-50 w-full">
 
-    {/* ── Top utility bar (desktop only) ── */}
-    <div className="hidden md:block w-full bg-white border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-end h-10 gap-1">
-          <Link
-            to="/design-templates"
-            className="group flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-plum/60 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-all duration-200"
-          >
-            <span className="icon text-[16px] leading-none text-primary-400 group-hover:text-primary-600 transition-colors">brush</span>
-            Editable Design Templates
-          </Link>
-
-          <span className="w-px h-4 bg-gray-200 mx-1" />
-
-          <Link
-            to="/qr-generator"
-            className="group flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-plum/60 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-all duration-200"
-          >
-            <span className="icon text-[16px] leading-none text-primary-400 group-hover:text-primary-600 transition-colors">qr_code_2</span>
-            QR Code Generator
-          </Link>
-
-          <span className="w-px h-4 bg-gray-200 mx-1" />
-
-          <Link
-            to="/blog"
-            className="group flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-plum/60 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-all duration-200"
-          >
-            <span className="icon text-[16px] leading-none text-primary-400 group-hover:text-primary-600 transition-colors">article</span>
-            Blog
-          </Link>
-        </div>
+    {/* ── Announcement Ticker ── */}
+    <div className="w-full bg-[#0a0a0a] text-white text-[11px] sm:text-[12px] font-semibold py-2 overflow-hidden flex flex-nowrap items-center border-b border-white/10">
+      <div className="flex animate-marquee-custom shrink-0 min-w-max">
+        {[...Array(5)].map((_, i) => (
+          <span key={`a-${i}`} className="mx-3 sm:mx-6 shrink-0 uppercase tracking-widest text-white/90">
+            Free Delivery Across India | GET 10% OFF ON FIRST PURCHASE USE CODE FIRST10 |
+          </span>
+        ))}
+      </div>
+      <div className="flex animate-marquee-custom shrink-0 min-w-max" aria-hidden="true">
+        {[...Array(5)].map((_, i) => (
+          <span key={`b-${i}`} className="mx-3 sm:mx-6 shrink-0 uppercase tracking-widest text-white/90">
+            Free Delivery Across India | GET 10% OFF ON FIRST PURCHASE USE CODE FIRST10 |
+          </span>
+        ))}
       </div>
     </div>
+
 
     <header
       className={`w-full transition-all duration-500 ${

@@ -1,9 +1,44 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCart } from '../context/CartContext'
 
 export default function Cart() {
   const { items, removeFromCart, updateQty, clearCart, totalItems, totalPrice } = useCart()
+  
+  const [couponCode, setCouponCode] = useState('')
+  const [appliedCoupon, setAppliedCoupon] = useState(null)
+  const [couponError, setCouponError] = useState('')
+
+  const handleApplyCoupon = () => {
+    setCouponError('')
+    const code = couponCode.trim().toUpperCase()
+    if (!code) return
+    
+    if (code === 'FIRST10') {
+      const hasOrdered = localStorage.getItem('tapzy_first_order_completed')
+      if (hasOrdered === 'true') {
+        setCouponError('This coupon is valid for first-time orders only.')
+        setAppliedCoupon(null)
+      } else {
+        setAppliedCoupon('FIRST10')
+        setCouponCode('')
+      }
+    } else {
+      setCouponError('Invalid or expired discount code.')
+      setAppliedCoupon(null)
+    }
+  }
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null)
+    setCouponError('')
+  }
+
+  const discountAmount = appliedCoupon === 'FIRST10' ? totalPrice * 0.10 : 0
+  const subtotalAfterDiscount = totalPrice - discountAmount
+  const shippingCost = subtotalAfterDiscount >= 999 || items.length === 0 ? 0 : 99
+  const finalTotal = subtotalAfterDiscount + shippingCost
 
   return (
     <main className="bg-offwhite min-h-screen">
@@ -160,32 +195,88 @@ export default function Cart() {
                   </div>
                   <div className="flex justify-between text-plum/60 font-medium">
                     <span>Shipping</span>
-                    <span className={totalPrice >= 999 ? 'text-green-600 font-bold' : ''}>
-                      {totalPrice >= 999 ? 'FREE' : '₹99'}
+                    <span className={shippingCost === 0 ? 'text-green-600 font-bold' : ''}>
+                      {shippingCost === 0 ? 'FREE' : '₹99'}
                     </span>
                   </div>
-                  {totalPrice < 999 && (
+                  {subtotalAfterDiscount < 999 && (
                     <p className="text-[11px] text-primary-500 font-medium bg-primary-50 px-3 py-2 rounded-xl">
-                      Add ₹{(999 - totalPrice).toLocaleString('en-IN')} more for free shipping 🎉
+                      Add ₹{(999 - subtotalAfterDiscount).toLocaleString('en-IN', { maximumFractionDigits: 0 })} more for free shipping 🎉
                     </p>
                   )}
+
+                  <div className="h-px bg-primary-100 my-2" />
+
+                  {/* ── Coupon Code Section ── */}
+                  <div className="flex flex-col gap-2 my-1">
+                    <div className="flex gap-2">
+                      <input 
+                        type="text" 
+                        placeholder="Discount code" 
+                        value={couponCode}
+                        onChange={(e) => {
+                          setCouponCode(e.target.value)
+                          setCouponError('')
+                        }}
+                        onKeyDown={(e) => e.key === 'Enter' && handleApplyCoupon()}
+                        className="flex-1 px-3 py-2 border border-primary-200 rounded-xl text-sm focus:outline-none focus:border-primary-500 bg-offwhite/50 uppercase transition-colors placeholder:normal-case font-medium text-plum"
+                      />
+                      <button 
+                        onClick={handleApplyCoupon}
+                        className="px-4 py-2 bg-plum text-white font-bold rounded-xl text-xs hover:bg-primary-600 transition-colors shadow-sm"
+                      >
+                        Apply
+                      </button>
+                    </div>
+                    {couponError && (
+                      <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-red-500 font-bold ml-1">
+                        {couponError}
+                      </motion.span>
+                    )}
+                    {appliedCoupon && (
+                      <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="flex justify-between items-center bg-green-50 px-3 py-2 rounded-lg border border-green-200 mt-1">
+                        <span className="text-xs text-green-700 font-bold flex items-center gap-1.5">
+                          <span className="icon text-sm leading-none">check_circle</span>
+                          Code {appliedCoupon} applied (-10%)
+                        </span>
+                        <button onClick={removeCoupon} className="text-green-700/60 hover:text-red-500 transition-colors flex items-center justify-center">
+                          <span className="icon text-base leading-none">cancel</span>
+                        </button>
+                      </motion.div>
+                    )}
+                  </div>
+
                   <div className="h-px bg-primary-100 my-1" />
-                  <div className="flex justify-between font-extrabold text-plum text-base">
+
+                  {/* ── Totals ── */}
+                  {appliedCoupon && (
+                    <div className="flex justify-between text-green-600 font-bold text-sm">
+                      <span>Discount (10%)</span>
+                      <span>-₹{discountAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between font-extrabold text-plum text-base mt-1">
                     <span>Total</span>
-                    <span className="bg-brand-gradient bg-clip-text text-transparent">
-                      ₹{(totalPrice + (totalPrice >= 999 ? 0 : 99)).toLocaleString('en-IN')}
+                    <span className="bg-brand-gradient bg-clip-text text-transparent text-lg">
+                      ₹{finalTotal.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                     </span>
                   </div>
                 </div>
 
                 {/* Checkout CTA */}
-                <Link
-                  to="/contact"
+                <button
+                  onClick={() => {
+                    // MOCK CHECKOUT: Just set the local storage flag so the error can be tested 
+                    // when they try to use it again on their "second" order.
+                    localStorage.setItem('tapzy_first_order_completed', 'true')
+                    window.location.href = '/contact' // Redirect to contact
+                  }}
                   className="mt-6 w-full flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold text-white bg-brand-gradient shadow-glow-sm hover:shadow-glow hover:scale-[1.02] active:scale-100 transition-all text-sm"
                 >
                   Proceed to Order
                   <span className="icon text-base leading-none">arrow_forward</span>
-                </Link>
+                </button>
 
                 <Link
                   to="/products"

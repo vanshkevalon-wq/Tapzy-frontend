@@ -52,6 +52,7 @@ export default {
         'float': 'float 6s ease-in-out infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4,0,0.6,1) infinite',
         'fade-in-down': 'fadeInDown 0.35s ease both',
+        'marquee': 'marquee 25s linear infinite',
       },
       keyframes: {
         float: {
@@ -61,6 +62,10 @@ export default {
         fadeInDown: {
           '0%':   { opacity: '0', transform: 'translate(-50%, -16px)' },
           '100%': { opacity: '1', transform: 'translate(-50%, 0)' },
+        },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
         },
       },
     },

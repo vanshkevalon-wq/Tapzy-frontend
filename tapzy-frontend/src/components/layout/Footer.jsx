@@ -126,11 +126,11 @@ export default function Footer() {
             <ul className="space-y-2.5 text-sm">
               <li className="flex items-center gap-2">
                 <span className="icon text-base text-primary-400 flex-shrink-0">mail</span>
-                hello@tapzy.com
+                sales@tapzy.com
               </li>
               <li className="flex items-center gap-2">
                 <span className="icon text-base text-primary-400 flex-shrink-0">call</span>
-                +1 (555) 000-0000
+                9725247990
               </li>
             </ul>
           </div>
