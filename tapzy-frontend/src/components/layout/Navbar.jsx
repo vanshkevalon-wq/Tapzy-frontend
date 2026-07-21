@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import TapzyLogo from '../common/TapzyLogo'
 import { useCart } from '../../context/CartContext'
+import { useWishlist } from '../../context/WishlistContext'
 import { useUserAuth } from '../../context/UserAuthContext'
 import AuthDrawer from '../auth/AuthDrawer'
+import SearchBar from './SearchBar'
 
 const links = [
   { to: '/',         label: 'Home' },
@@ -19,6 +21,7 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [authOpen, setAuthOpen]   = useState(false)
   const { totalItems } = useCart()
+  const { totalItems: wishlistCount } = useWishlist()
   const { user } = useUserAuth()
 
   useEffect(() => {
@@ -36,8 +39,45 @@ export default function Navbar() {
 
   return (
     <>
+    <div className="sticky top-0 z-50 w-full">
+
+    {/* ── Top utility bar (desktop only) ── */}
+    <div className="hidden md:block w-full bg-white border-b border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-end h-10 gap-1">
+          <Link
+            to="/design-templates"
+            className="group flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-plum/60 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-all duration-200"
+          >
+            <span className="icon text-[16px] leading-none text-primary-400 group-hover:text-primary-600 transition-colors">brush</span>
+            Editable Design Templates
+          </Link>
+
+          <span className="w-px h-4 bg-gray-200 mx-1" />
+
+          <Link
+            to="/qr-generator"
+            className="group flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-plum/60 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-all duration-200"
+          >
+            <span className="icon text-[16px] leading-none text-primary-400 group-hover:text-primary-600 transition-colors">qr_code_2</span>
+            QR Code Generator
+          </Link>
+
+          <span className="w-px h-4 bg-gray-200 mx-1" />
+
+          <Link
+            to="/blog"
+            className="group flex items-center gap-1.5 px-3 py-1.5 text-[13px] font-semibold text-plum/60 hover:text-primary-600 rounded-lg hover:bg-primary-50 transition-all duration-200"
+          >
+            <span className="icon text-[16px] leading-none text-primary-400 group-hover:text-primary-600 transition-colors">article</span>
+            Blog
+          </Link>
+        </div>
+      </div>
+    </div>
+
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-500 ${
+      className={`w-full transition-all duration-500 ${
         scrolled
           ? 'bg-plum/95 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border-b border-white/10'
           : 'bg-plum border-b border-white/5'
@@ -95,18 +135,28 @@ export default function Navbar() {
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               aria-label="Search"
-              className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+              className={`relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-200
+                ${searchOpen
+                  ? 'text-white bg-white/15'
+                  : 'text-white/70 hover:text-white hover:bg-white/10'
+                }`}
             >
-              <span className="icon text-[22px] leading-none">search</span>
+              <span className="icon text-[22px] leading-none">{searchOpen ? 'close' : 'search'}</span>
             </button>
 
             {/* Wishlist icon */}
-            <button
-              aria-label="Wishlist"
+            <Link
+              to="/wishlist"
+              aria-label={`Wishlist — ${wishlistCount} items`}
               className="relative hidden md:flex items-center justify-center w-10 h-10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
             >
               <span className="icon text-[22px] leading-none">favorite_border</span>
-            </button>
+              {wishlistCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold leading-none shadow-glow-sm">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
 
             {/* Profile icon */}
             <button
@@ -163,6 +213,9 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* ── Search bar (slides in below header bar) ── */}
+      <SearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />
+
       {/* ── Mobile menu ── */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
@@ -200,18 +253,28 @@ export default function Navbar() {
             <button
               onClick={() => { setSearchOpen(!searchOpen); setOpen(false) }}
               aria-label="Search"
-              className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+              className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all duration-200
+                ${searchOpen ? 'text-white bg-white/15' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
             >
               <span className="icon text-xl leading-none">search</span>
               <span className="text-[10px] font-medium">Search</span>
             </button>
-            <button
-              aria-label="Wishlist"
+            <Link
+              to="/wishlist"
+              onClick={() => setOpen(false)}
+              aria-label={`Wishlist — ${wishlistCount} items`}
               className="flex flex-col items-center gap-1 px-4 py-2 rounded-xl text-white/60 hover:text-white hover:bg-white/10 transition-all duration-200"
             >
-              <span className="icon text-xl leading-none">favorite_border</span>
+              <span className="relative">
+                <span className="icon text-xl leading-none">favorite_border</span>
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-[16px] px-0.5 rounded-full bg-red-500 text-white text-[9px] font-bold leading-none">
+                    {wishlistCount}
+                  </span>
+                )}
+              </span>
               <span className="text-[10px] font-medium">Wishlist</span>
-            </button>
+            </Link>
             <button
               onClick={() => { setAuthOpen(true); setOpen(false) }}
               aria-label="Profile"
@@ -247,6 +310,8 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+
+    </div>{/* end sticky wrapper */}
 
     {/* ── Auth Drawer ── */}
     <AuthDrawer open={authOpen} onClose={() => setAuthOpen(false)} />

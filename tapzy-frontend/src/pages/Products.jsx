@@ -15,17 +15,20 @@ export default function Products() {
   const [products, setProducts] = useState([])
   const [loading, setLoading]   = useState(true)
   const [error, setError]       = useState('')
-  const [search, setSearch]     = useState('')
   const [sort, setSort]         = useState('newest')
   const [searchParams] = useSearchParams()
 
   // Pre-select category from URL ?category=X
   const [category, setCategory] = useState(() => searchParams.get('category') || 'All')
+  // Pre-fill search from URL ?search=X (e.g. from navbar search)
+  const [search, setSearch]     = useState(() => searchParams.get('search') || '')
 
-  // Keep category in sync if user navigates from a different category card
+  // Keep category + search in sync if URL params change
   useEffect(() => {
     const cat = searchParams.get('category')
     if (cat) setCategory(cat)
+    const q = searchParams.get('search')
+    if (q !== null) setSearch(q)
   }, [searchParams])
 
   useEffect(() => {

@@ -5,6 +5,7 @@ import api from '../services/api'
 import { PageLoader } from '../components/common/Loader'
 import SimilarProducts from '../components/products/SimilarProducts'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 
 const features = [
   { icon: '⚡', label: 'Instant Share', desc: 'Tap and share, no app needed' },
@@ -34,6 +35,7 @@ export default function ProductDetail() {
   const [added, setAdded]             = useState(false)
 
   const { addToCart } = useCart()
+  const { toggleWishlist, isWishlisted } = useWishlist()
 
   function handleAddToCart() {
     addToCart(product)
@@ -298,6 +300,24 @@ export default function ProductDetail() {
                 </span>
                 {added ? 'Added to Cart!' : 'Add to Cart'}
               </button>
+
+              {/* Wishlist toggle */}
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={() => product && toggleWishlist(product)}
+                aria-label={product && isWishlisted(product._id) ? 'Remove from wishlist' : 'Add to wishlist'}
+                className={`inline-flex items-center justify-center gap-2 px-5 py-4 rounded-2xl font-bold border-2 transition-all text-sm
+                  ${product && isWishlisted(product._id)
+                    ? 'border-red-300 text-red-500 bg-red-50 hover:bg-red-100'
+                    : 'border-primary-200 text-primary-600 hover:bg-primary-50 hover:border-primary-400'
+                  }`}
+              >
+                <span className={`icon text-base leading-none ${product && isWishlisted(product._id) ? 'icon-fill' : ''}`}>
+                  favorite
+                </span>
+                {product && isWishlisted(product._id) ? 'Wishlisted' : 'Wishlist'}
+              </motion.button>
+
               <Link
                 to="/contact"
                 className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold border-2 border-primary-200 text-primary-600 hover:bg-primary-50 hover:border-primary-400 transition-all text-center text-sm"

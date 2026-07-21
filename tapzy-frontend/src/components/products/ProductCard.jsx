@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useCart } from '../../context/CartContext'
+import { useWishlist } from '../../context/WishlistContext'
 
 export default function ProductCard({ product }) {
   const { _id, name, price, mainImage, image, category } = product
@@ -8,11 +9,19 @@ export default function ProductCard({ product }) {
   const discountedPrice = (Number(price) * 1.2).toLocaleString('en-IN', { maximumFractionDigits: 0 })
 
   const { addToCart } = useCart()
+  const { toggleWishlist, isWishlisted } = useWishlist()
+  const wishlisted = isWishlisted(_id)
 
   function handleAddToCart(e) {
     e.preventDefault()   // stop the Link navigation
     e.stopPropagation()
     addToCart(product)
+  }
+
+  function handleToggleWishlist(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    toggleWishlist(product)
   }
 
   return (
@@ -36,6 +45,23 @@ export default function ProductCard({ product }) {
             {category}
           </span>
         )}
+
+        {/* Wishlist heart button */}
+        <motion.button
+          initial={false}
+          whileTap={{ scale: 0.8 }}
+          onClick={handleToggleWishlist}
+          aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          className={`absolute top-3 right-3 flex items-center justify-center w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm shadow-sm border transition-all duration-200
+            ${wishlisted
+              ? 'border-red-200 text-red-500 opacity-100'
+              : 'border-primary-100 text-plum/30 opacity-0 group-hover:opacity-100 hover:text-red-400 hover:border-red-200'
+            }`}
+        >
+          <span className={`icon text-lg leading-none ${wishlisted ? 'icon-fill' : ''}`}>
+            favorite
+          </span>
+        </motion.button>
 
         {/* Add to Cart button — appears on hover */}
         <motion.button

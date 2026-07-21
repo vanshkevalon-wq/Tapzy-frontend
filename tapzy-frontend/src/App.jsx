@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
+import { WishlistProvider } from './context/WishlistContext'
 import { UserAuthProvider } from './context/UserAuthContext'
 import { ScrollToTopOnNav } from './components/common/ScrollToTop'
 import ScrollToTopButton from './components/common/ScrollToTop'
@@ -18,6 +19,10 @@ import FAQ from './pages/FAQ'
 import Contact from './pages/Contact'
 import SubscriptionPlans from './pages/SubscriptionPlans'
 import Cart from './pages/Cart'
+import Wishlist from './pages/Wishlist'
+import DesignTemplates from './pages/DesignTemplates'
+import QRGenerator from './pages/QRGenerator'
+import Blog from './pages/Blog'
 import CompatiblePhone from './pages/CompatiblePhone'
 import IphoneNfcGuide from './pages/guides/IphoneNfcGuide'
 import GenericNfcGuide from './pages/guides/GenericNfcGuide'
@@ -62,6 +67,10 @@ function PublicLayout() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/subscription-plans" element={<SubscriptionPlans />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/design-templates" element={<DesignTemplates />} />
+          <Route path="/qr-generator" element={<QRGenerator />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/policy/compatible-phone" element={<CompatiblePhone />} />
           <Route path="/guide/iphone-nfc-guide" element={<IphoneNfcGuide />} />
           <Route path="/guide/:guideId" element={<GenericNfcGuide />} />
@@ -88,6 +97,7 @@ export default function App() {
       <AuthProvider>
         <UserAuthProvider>
         <CartProvider>
+          <WishlistProvider>
           <ScrollToTopOnNav />
           <div className="w-full max-w-full overflow-x-clip">
             <Routes>
@@ -122,6 +132,7 @@ export default function App() {
             {/* Floating scroll-to-top button */}
             <ScrollToTopButton />
           </div>
+          </WishlistProvider>
         </CartProvider>
         </UserAuthProvider>
       </AuthProvider>

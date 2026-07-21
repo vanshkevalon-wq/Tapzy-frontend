@@ -15,10 +15,17 @@ const destroyCloudinaryAsset = async (publicId) => {
 /**
  * GET /api/products
  * Public — all products, newest first.
+ * Supports optional ?search= query param for name/category filtering.
  */
-const getProducts = async (_req, res, next) => {
+const getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 })
+    const { search } = req.query
+    let filter = {}
+    if (search && search.trim()) {
+      const regex = new RegExp(search.trim(), 'i')
+      filter = { $or: [{ name: regex }, { category: regex }, { description: regex }] }
+    }
+    const products = await Product.find(filter).sort({ createdAt: -1 })
     res.json(products)
   } catch (err) {
     next(err)
