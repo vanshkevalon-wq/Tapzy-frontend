@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { CartProvider } from './context/CartContext'
 import { ScrollToTopOnNav } from './components/common/ScrollToTop'
 import ScrollToTopButton from './components/common/ScrollToTop'
 
@@ -15,6 +16,7 @@ import ProductDetail from './pages/ProductDetail'
 import FAQ from './pages/FAQ'
 import Contact from './pages/Contact'
 import SubscriptionPlans from './pages/SubscriptionPlans'
+import Cart from './pages/Cart'
 
 // Admin pages
 import AdminLogin from './pages/admin/AdminLogin'
@@ -43,6 +45,7 @@ function PublicLayout() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/subscription-plans" element={<SubscriptionPlans />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </div>
       <Footer />
@@ -54,36 +57,38 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ScrollToTopOnNav />
-        <div className="w-full max-w-full overflow-x-clip">
-          <Routes>
-            {/* Admin routes (no Navbar/Footer) */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route
-              path="/admin/dashboard"
-              element={<RequireAuth><Dashboard /></RequireAuth>}
-            />
-            <Route
-              path="/admin/products"
-              element={<RequireAuth><ManageProducts /></RequireAuth>}
-            />
-            <Route
-              path="/admin/contacts"
-              element={<RequireAuth><ContactSubmissions /></RequireAuth>}
-            />
-            <Route
-              path="/admin/profile"
-              element={<RequireAuth><AdminProfile /></RequireAuth>}
-            />
-            <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+        <CartProvider>
+          <ScrollToTopOnNav />
+          <div className="w-full max-w-full overflow-x-clip">
+            <Routes>
+              {/* Admin routes (no Navbar/Footer) */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route
+                path="/admin/dashboard"
+                element={<RequireAuth><Dashboard /></RequireAuth>}
+              />
+              <Route
+                path="/admin/products"
+                element={<RequireAuth><ManageProducts /></RequireAuth>}
+              />
+              <Route
+                path="/admin/contacts"
+                element={<RequireAuth><ContactSubmissions /></RequireAuth>}
+              />
+              <Route
+                path="/admin/profile"
+                element={<RequireAuth><AdminProfile /></RequireAuth>}
+              />
+              <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
 
-            {/* Public routes */}
-            <Route path="/*" element={<PublicLayout />} />
-          </Routes>
+              {/* Public routes */}
+              <Route path="/*" element={<PublicLayout />} />
+            </Routes>
 
-          {/* Floating scroll-to-top button */}
-          <ScrollToTopButton />
-        </div>
+            {/* Floating scroll-to-top button */}
+            <ScrollToTopButton />
+          </div>
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
   )

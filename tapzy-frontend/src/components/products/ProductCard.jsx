@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useCart } from '../../context/CartContext'
 
 export default function ProductCard({ product }) {
   const { _id, name, price, mainImage, image, category } = product
   const imgUrl = mainImage?.url || image || 'https://placehold.co/400x400/f9f0ff/A64BDF?text=Tapzy'
   const discountedPrice = (Number(price) * 1.2).toLocaleString('en-IN', { maximumFractionDigits: 0 })
+
+  const { addToCart } = useCart()
+
+  function handleAddToCart(e) {
+    e.preventDefault()   // stop the Link navigation
+    e.stopPropagation()
+    addToCart(product)
+  }
 
   return (
     <Link
@@ -28,13 +37,15 @@ export default function ProductCard({ product }) {
           </span>
         )}
 
-        {/* Arrow button that appears on hover */}
-        <motion.div
+        {/* Add to Cart button — appears on hover */}
+        <motion.button
           initial={false}
-          className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-primary-500 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-glow-sm"
+          onClick={handleAddToCart}
+          className="absolute bottom-3 right-3 flex items-center gap-1.5 bg-primary-500 hover:bg-primary-600 active:scale-95 text-white text-[11px] font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-glow-sm"
         >
-          <span className="icon text-base">arrow_forward</span>
-        </motion.div>
+          <span className="icon text-sm leading-none">add_shopping_cart</span>
+          Add to Cart
+        </motion.button>
       </div>
 
       {/* Info */}

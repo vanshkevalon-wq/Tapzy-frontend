@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import api from '../services/api'
 import { PageLoader } from '../components/common/Loader'
 import SimilarProducts from '../components/products/SimilarProducts'
+import { useCart } from '../context/CartContext'
 
 const features = [
   { icon: '⚡', label: 'Instant Share', desc: 'Tap and share, no app needed' },
@@ -30,6 +31,15 @@ export default function ProductDetail() {
   const [activeImage, setActiveImage] = useState(null)
   const [activeTab, setActiveTab]     = useState('overview')
   const [zoomed, setZoomed]           = useState(false)
+  const [added, setAdded]             = useState(false)
+
+  const { addToCart } = useCart()
+
+  function handleAddToCart() {
+    addToCart(product)
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2000)
+  }
 
   useEffect(() => {
     setLoading(true)
@@ -277,13 +287,17 @@ export default function ProductDetail() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-              <Link
-                to="/contact"
-                className="flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl font-bold text-white bg-brand-gradient shadow-glow-sm hover:shadow-glow hover:scale-[1.02] transition-all text-center text-sm"
+              <button
+                onClick={handleAddToCart}
+                className={`flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl font-bold text-white shadow-glow-sm hover:shadow-glow hover:scale-[1.02] active:scale-100 transition-all text-sm ${
+                  added ? 'bg-green-500' : 'bg-brand-gradient'
+                }`}
               >
-                Order Now
-                <span className="icon text-base">arrow_forward</span>
-              </Link>
+                <span className="icon text-base leading-none">
+                  {added ? 'check_circle' : 'add_shopping_cart'}
+                </span>
+                {added ? 'Added to Cart!' : 'Add to Cart'}
+              </button>
               <Link
                 to="/contact"
                 className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold border-2 border-primary-200 text-primary-600 hover:bg-primary-50 hover:border-primary-400 transition-all text-center text-sm"
