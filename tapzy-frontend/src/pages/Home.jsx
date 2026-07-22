@@ -7,7 +7,10 @@ import HowItWorks from '../components/home/HowItWorks'
 import OrderGuide from '../components/home/OrderGuide'
 import NfcBenefits from '../components/home/NfcBenefits'
 import WhyTapzy from '../components/home/WhyTapzy'
-import FeaturedCategories from '../components/home/FeaturedCategories'
+import TopPicks from '../components/home/TopPicks'
+import BrandTicker from '../components/home/BrandTicker'
+import OneIdentity from '../components/home/OneIdentity'
+import PvcSmartCards from '../components/home/PvcSmartCards'
 
 /* ─────────────────────────────────────────
    MARQUEE  – infinite scrolling ticker
@@ -63,8 +66,8 @@ function CountUp({ target, suffix = '' }) {
 const stats = [
   { value: '10K', suffix: '+', label: 'Cards Delivered', icon: '📦' },
   { value: '500', suffix: '+', label: 'Happy Businesses', icon: '🏢' },
-  { value: '50',  suffix: '+', label: 'Countries Shipped', icon: '🌍' },
-  { value: '99',  suffix: '%', label: 'Satisfaction Rate', icon: '⭐' },
+  { value: '50', suffix: '+', label: 'Countries Shipped', icon: '🌍' },
+  { value: '99', suffix: '%', label: 'Satisfaction Rate', icon: '⭐' },
 ]
 
 /* ─────────────────────────────────────────
@@ -254,29 +257,32 @@ export default function Home() {
       {/* 2. Marquee ticker */}
       <Marquee />
 
-      {/* 3. Featured Categories — Buy Premium NFC Cards */}
-      <FeaturedCategories />
-
-      {/* 4. How It Works */}
+      {/* 3. How It Works (Simple Process) */}
       <HowItWorks />
 
-      {/* 5. Order Guide — Step-by-Step */}
-      <OrderGuide />
+      {/* 3.5 Top Picks from Tapzy (Bestsellers Section) */}
+      <TopPicks />
 
-      {/* 6. NFC Benefits — Boost Your Networking */}
-      <NfcBenefits />
+      {/* Brand Logos Infinite Announcement Ticker (White Background) */}
+      <BrandTicker />
+
+      {/* One Identity Isn't Enough Section */}
+      <OneIdentity />
 
       {/* 7. Why Tapzy — animated phone tap + bullets */}
       <WhyTapzy />
+
+      {/* Tapzy PVC Smart Business Cards */}
+      <PvcSmartCards />
 
       {/* 4. Animated Stats */}
       <section className="py-16 px-4 bg-brand-gradient relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div className="absolute top-0 left-1/4 w-48 h-48 rounded-full bg-white/10 blur-3xl"
-            animate={{ scale: [1,1.3,1] }} transition={{ duration: 6, repeat: Infinity }}
+            animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 6, repeat: Infinity }}
           />
           <motion.div className="absolute bottom-0 right-1/4 w-40 h-40 rounded-full bg-white/10 blur-3xl"
-            animate={{ scale: [1.2,1,1.2] }} transition={{ duration: 6, repeat: Infinity }}
+            animate={{ scale: [1.2, 1, 1.2] }} transition={{ duration: 6, repeat: Infinity }}
           />
         </div>
         <div className="relative max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -296,8 +302,8 @@ export default function Home() {
 
       {/* 8. Testimonials */}
       <section className="py-24 px-4 bg-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-50 rounded-full blur-3xl opacity-50 pointer-events-none"/>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-lavender-50 rounded-full blur-3xl opacity-50 pointer-events-none"/>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-lavender-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
         <div className="relative max-w-6xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
             className="text-center mb-14"
@@ -314,10 +320,10 @@ export default function Home() {
                 whileHover={{ y: -6, transition: { duration: 0.25 } }}
                 className="relative bg-offwhite rounded-3xl p-7 border border-primary-100 hover:border-primary-200 hover:shadow-card-hover transition-all duration-300 group overflow-hidden"
               >
-                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-primary-100/0 group-hover:bg-primary-100/40 blur-xl transition-all duration-500 pointer-events-none"/>
+                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-primary-100/0 group-hover:bg-primary-100/40 blur-xl transition-all duration-500 pointer-events-none" />
                 <div className="absolute top-5 right-6 text-6xl text-primary-100 font-serif leading-none select-none">"</div>
                 <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_,j) => (
+                  {[...Array(5)].map((_, j) => (
                     <span key={j} className="icon icon-fill text-base text-yellow-400" style={{ fontSize: '16px' }}>star</span>
                   ))}
                 </div>
@@ -349,7 +355,7 @@ export default function Home() {
           <div className="text-center mt-7">
             <Link to="/faq" className="inline-flex items-center gap-1.5 text-primary-500 font-bold text-sm hover:text-primary-700 transition-colors">
               See all FAQs
-            <span className="icon text-base">arrow_forward</span>
+              <span className="icon text-base">arrow_forward</span>
             </Link>
           </div>
         </div>
@@ -357,16 +363,16 @@ export default function Home() {
 
       {/* 10. Final CTA */}
       <section className="py-24 px-4 bg-brand-gradient relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-mesh opacity-25 pointer-events-none"/>
+        <div className="absolute inset-0 bg-hero-mesh opacity-25 pointer-events-none" />
         {/* decorative rings — kept well inside overflow:hidden parent */}
-        <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full border border-white/10 pointer-events-none"/>
-        <div className="absolute -bottom-20 -right-20 w-56 h-56 rounded-full border border-white/10 pointer-events-none"/>
-        <div className="absolute top-8 right-1/3 w-2.5 h-2.5 rounded-full bg-white/30 pointer-events-none"/>
-        <div className="absolute bottom-10 left-1/4 w-2 h-2 rounded-full bg-white/20 pointer-events-none"/>
+        <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full border border-white/10 pointer-events-none" />
+        <div className="absolute -bottom-20 -right-20 w-56 h-56 rounded-full border border-white/10 pointer-events-none" />
+        <div className="absolute top-8 right-1/3 w-2.5 h-2.5 rounded-full bg-white/30 pointer-events-none" />
+        <div className="absolute bottom-10 left-1/4 w-2 h-2 rounded-full bg-white/20 pointer-events-none" />
         <div className="relative max-w-3xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <span className="inline-flex items-center gap-2 bg-white/15 border border-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide">
-              <motion.span className="w-1.5 h-1.5 rounded-full bg-green-400" animate={{ opacity: [1,0.3,1] }} transition={{ duration: 1.2, repeat: Infinity }}/>
+              <motion.span className="w-1.5 h-1.5 rounded-full bg-green-400" animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.2, repeat: Infinity }} />
               Join 10,000+ professionals
             </span>
             <h2 className="text-4xl lg:text-5xl font-extrabold text-white mb-5 leading-tight">

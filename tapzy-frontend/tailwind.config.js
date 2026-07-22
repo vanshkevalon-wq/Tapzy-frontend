@@ -35,7 +35,7 @@ export default {
         offwhite: '#FAF7FC',
       },
       fontFamily: {
-        sans: ['Sora', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'Sora', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'brand-gradient': 'linear-gradient(135deg, #A64BDF 0%, #B289D5 100%)',

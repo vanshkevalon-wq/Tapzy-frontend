@@ -29,6 +29,14 @@ export default function ProductCard({ product }) {
       to={`/products/${_id}`}
       className="group relative bg-white rounded-3xl border border-primary-100 shadow-card hover:shadow-card-hover hover:border-primary-200 transition-all duration-300 overflow-hidden flex flex-col"
     >
+      {/* Subtle wavy background pattern */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.04]" viewBox="0 0 400 500" fill="none" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <path d="M-50 450 C100 350 200 150 350 250 C450 320 480 430 550 380" stroke="#7c3aed" strokeWidth="1.5" fill="none"/>
+        <path d="M-50 470 C110 370 210 170 360 270 C460 340 490 450 550 400" stroke="#7c3aed" strokeWidth="1" fill="none"/>
+        <path d="M-50 490 C120 390 220 190 370 290 C470 360 500 470 550 420" stroke="#7c3aed" strokeWidth="0.7" fill="none"/>
+        <path d="M-50 420 C90 320 190 120 340 220 C440 300 470 410 550 360" stroke="#7c3aed" strokeWidth="2" fill="none"/>
+        <path d="M-50 400 C80 300 180 100 330 200 C430 280 460 390 550 340" stroke="#7c3aed" strokeWidth="1.2" fill="none"/>
+      </svg>
       {/* Image */}
       <div className="relative overflow-hidden bg-primary-50/60" style={{ aspectRatio: '1 / 1' }}>
         <img

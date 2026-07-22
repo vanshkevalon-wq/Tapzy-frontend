@@ -73,10 +73,10 @@ function CentreVisual() {
           {/* tap indicator */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
             <svg width="22" height="18" viewBox="0 0 28 22" fill="none">
-              <path d="M2 11C5 5 9 2.5 14 2.5S23 5 26 11" stroke="#A64BDF" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.3"/>
-              <path d="M5 11C7.5 6.5 10.5 4.5 14 4.5S20.5 6.5 23 11" stroke="#A64BDF" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.6"/>
-              <path d="M9 11C10.5 8.5 12 7.5 14 7.5S17.5 8.5 19 11" stroke="#A64BDF" strokeWidth="2.2" strokeLinecap="round" strokeOpacity="0.9"/>
-              <circle cx="14" cy="14" r="2" fill="#A64BDF"/>
+              <path d="M2 11C5 5 9 2.5 14 2.5S23 5 26 11" stroke="#A64BDF" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.3" />
+              <path d="M5 11C7.5 6.5 10.5 4.5 14 4.5S20.5 6.5 23 11" stroke="#A64BDF" strokeWidth="2" strokeLinecap="round" strokeOpacity="0.6" />
+              <path d="M9 11C10.5 8.5 12 7.5 14 7.5S17.5 8.5 19 11" stroke="#A64BDF" strokeWidth="2.2" strokeLinecap="round" strokeOpacity="0.9" />
+              <circle cx="14" cy="14" r="2" fill="#A64BDF" />
             </svg>
             <p style={{ fontSize: 7, color: '#A64BDF', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Tap to Connect</p>
           </div>
@@ -104,9 +104,9 @@ function CentreVisual() {
         {/* NFC icon top-right */}
         <div style={{ position: 'absolute', top: 8, right: 10 }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-            <path d="M6 8.5C7.5 7 9.7 6 12 6s4.5 1 6 2.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeOpacity="0.5"/>
-            <path d="M8.5 11C9.6 9.8 10.7 9.2 12 9.2s2.4.6 3.5 1.8" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeOpacity="0.8"/>
-            <circle cx="12" cy="14" r="1.5" fill="white"/>
+            <path d="M6 8.5C7.5 7 9.7 6 12 6s4.5 1 6 2.5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeOpacity="0.5" />
+            <path d="M8.5 11C9.6 9.8 10.7 9.2 12 9.2s2.4.6 3.5 1.8" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeOpacity="0.8" />
+            <circle cx="12" cy="14" r="1.5" fill="white" />
           </svg>
         </div>
         {/* chip */}
@@ -220,11 +220,11 @@ export default function NfcBenefits() {
               `}</style>
             </defs>
             {/* lines from centre (50%,50%) to each corner/mid */}
-            <line className="spoke" x1="50%" y1="50%" x2="6%"  y2="16%" />
+            <line className="spoke" x1="50%" y1="50%" x2="6%" y2="16%" />
             <line className="spoke" x1="50%" y1="50%" x2="94%" y2="16%" />
-            <line className="spoke" x1="50%" y1="50%" x2="6%"  y2="50%" />
+            <line className="spoke" x1="50%" y1="50%" x2="6%" y2="50%" />
             <line className="spoke" x1="50%" y1="50%" x2="94%" y2="50%" />
-            <line className="spoke" x1="50%" y1="50%" x2="6%"  y2="84%" />
+            <line className="spoke" x1="50%" y1="50%" x2="6%" y2="84%" />
             <line className="spoke" x1="50%" y1="50%" x2="94%" y2="84%" />
           </svg>
         </div>
