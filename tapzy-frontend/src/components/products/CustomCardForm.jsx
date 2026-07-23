@@ -47,6 +47,7 @@ export default function CustomCardForm() {
       const response = await api.post('/custom-cards', data)
 
       setSuccess(true)
+      alert('Your custom card request has been submitted successfully! Our design team will reach out to you soon.')
       setFormData({ name: '', mobile: '', email: '', designation: '' })
       setImages([null, null, null, null])
     } catch (err) {
