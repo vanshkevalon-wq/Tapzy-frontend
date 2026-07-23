@@ -72,6 +72,11 @@ const getProduct = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   try {
     const { name, price, category, description } = req.body
+    
+    let specifications;
+    if (req.body.specifications) {
+      try { specifications = JSON.parse(req.body.specifications) } catch(e) {}
+    }
 
     if (!name || price === undefined) {
       return res.status(400).json({ message: 'Name and price are required.' })
@@ -85,6 +90,7 @@ const createProduct = async (req, res, next) => {
       mainImage:     req.mainImage || null,
       similarImages: req.similarImages || [],
       image:         req.mainImage?.url || '',
+      ...(specifications && { specifications })
     })
 
     res.status(201).json(product)
@@ -103,6 +109,11 @@ const updateProduct = async (req, res, next) => {
     if (!existing) return res.status(404).json({ message: 'Product not found.' })
 
     const { name, price, category, description } = req.body
+
+    let specifications;
+    if (req.body.specifications) {
+      try { specifications = JSON.parse(req.body.specifications) } catch(e) {}
+    }
 
     // If new mainImage uploaded, delete old one
     let mainImage = existing.mainImage
@@ -127,6 +138,7 @@ const updateProduct = async (req, res, next) => {
         mainImage,
         similarImages,
         image:         mainImage?.url || existing.image,
+        ...(specifications && { specifications })
       },
       { new: true, runValidators: true }
     )

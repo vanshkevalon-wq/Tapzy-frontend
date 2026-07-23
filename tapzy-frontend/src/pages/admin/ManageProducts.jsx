@@ -40,6 +40,10 @@ export default function ManageProducts() {
       fd.append('category', fields.category || '')
       fd.append('description', fields.description || '')
 
+      if (fields.specifications) {
+        fd.append('specifications', JSON.stringify(fields.specifications))
+      }
+
       // Append main image if provided
       if (mainImageFile) {
         fd.append('mainImage', mainImageFile)

@@ -18,6 +18,13 @@ const productSchema = new mongoose.Schema(
     similarImages: { type: [imageSchema], default: [] },
     // Legacy single-image URL field kept for backwards compat
     image:         { type: String, default: '' },
+    specifications: {
+      material: { type: String, default: 'Metal' },
+      technology: { type: String, default: 'NFC' },
+      compatibility: { type: String, default: 'All NFC-enabled devices' },
+      dimensions: { type: String, default: '163 x 255 mm' },
+      waterproof: { type: String, default: 'Yes' }
+    },
   },
   { timestamps: true }
 )

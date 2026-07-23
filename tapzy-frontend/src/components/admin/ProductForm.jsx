@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import ImageUploader, { MultiImageUploader } from '../common/ImageUploader'
 
-const EMPTY = { name: '', price: '', category: '', description: '' }
+const EMPTY = { 
+  name: '', price: '', category: '', description: '',
+  specMaterial: 'Metal', specTechnology: 'NFC', specCompatibility: 'All NFC-enabled devices',
+  specDimensions: '163 x 255 mm', specWaterproof: 'Yes'
+}
 
 export default function ProductForm({ initialData = null, onSubmit, onCancel, onRemoveExisting, loading = false }) {
   const [form, setForm]             = useState(EMPTY)
@@ -16,6 +20,11 @@ export default function ProductForm({ initialData = null, onSubmit, onCancel, on
         price:       initialData.price ?? '',
         category:    initialData.category || '',
         description: initialData.description || '',
+        specMaterial: initialData.specifications?.material || 'Metal',
+        specTechnology: initialData.specifications?.technology || 'NFC',
+        specCompatibility: initialData.specifications?.compatibility || 'All NFC-enabled devices',
+        specDimensions: initialData.specifications?.dimensions || '163 x 255 mm',
+        specWaterproof: initialData.specifications?.waterproof || 'Yes',
       })
     } else {
       setForm(EMPTY)
@@ -41,7 +50,18 @@ export default function ProductForm({ initialData = null, onSubmit, onCancel, on
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
-    onSubmit?.({ ...form, mainImageFile, similarFiles })
+    onSubmit?.({ 
+      ...form, 
+      specifications: {
+        material: form.specMaterial,
+        technology: form.specTechnology,
+        compatibility: form.specCompatibility,
+        dimensions: form.specDimensions,
+        waterproof: form.specWaterproof
+      },
+      mainImageFile, 
+      similarFiles 
+    })
   }
 
   const inputClass = (hasError) =>
@@ -77,6 +97,33 @@ export default function ProductForm({ initialData = null, onSubmit, onCancel, on
           placeholder="Product description..."
           className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-300 resize-none"
         />
+      </div>
+
+      {/* Specifications */}
+      <div className="space-y-4 pt-4 border-t border-gray-100">
+        <h4 className="text-sm font-bold text-plum">Product Specifications</h4>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-xs font-semibold text-plum/60 uppercase tracking-wide mb-1.5" htmlFor="specMaterial">Material</label>
+            <input id="specMaterial" name="specMaterial" type="text" value={form.specMaterial} onChange={handleChange} className={inputClass(false)} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-plum/60 uppercase tracking-wide mb-1.5" htmlFor="specTechnology">Technology</label>
+            <input id="specTechnology" name="specTechnology" type="text" value={form.specTechnology} onChange={handleChange} className={inputClass(false)} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-plum/60 uppercase tracking-wide mb-1.5" htmlFor="specCompatibility">Compatibility</label>
+            <input id="specCompatibility" name="specCompatibility" type="text" value={form.specCompatibility} onChange={handleChange} className={inputClass(false)} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-plum/60 uppercase tracking-wide mb-1.5" htmlFor="specDimensions">Dimensions</label>
+            <input id="specDimensions" name="specDimensions" type="text" value={form.specDimensions} onChange={handleChange} className={inputClass(false)} />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-plum/60 uppercase tracking-wide mb-1.5" htmlFor="specWaterproof">Waterproof</label>
+            <input id="specWaterproof" name="specWaterproof" type="text" value={form.specWaterproof} onChange={handleChange} className={inputClass(false)} />
+          </div>
+        </div>
       </div>
 
       <ImageUploader

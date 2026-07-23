@@ -8,6 +8,9 @@ import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import neonPodiumImg from '../assets/neon-podium.png'
 import CustomCardForm from '../components/products/CustomCardForm'
+import step1FullImg from '../assets/step1-full.png'
+import step2FullImg from '../assets/step2-full.png'
+import step3FullImg from '../assets/step3-full.png'
 
 const styleColors = [
   { name: 'Black', cls: 'bg-black' },
@@ -273,6 +276,86 @@ export default function ProductDetail() {
       </div>
 
       <CustomCardForm />
+
+      {/* ── Get Started Today Section ── */}
+      <div className="max-w-7xl mx-auto px-4 mt-20 mb-20">
+        <div className="text-center mb-12">
+          <p className="text-white tracking-[0.15em] text-xs sm:text-sm font-bold uppercase mb-4">GET STARTED TODAY</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">We Take Care Of The Heavy Lifting</h2>
+          <p className="text-white/70 text-sm sm:text-base max-w-3xl mx-auto font-medium">
+            No confusing tools. No design friction. From the first step to your final launch, we cover all the bases — so you can focus on running your business.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 mb-24">
+          {/* Step 1 Full Image */}
+          <div className="w-full h-auto flex items-center justify-center">
+            <img src={step1FullImg} alt="Step 1: Choose Your Smart Card" className="w-full h-auto rounded-3xl object-contain shadow-2xl" />
+          </div>
+
+          {/* Step 2 Full Image */}
+          <div className="w-full h-auto flex items-center justify-center">
+            <img src={step2FullImg} alt="Step 2: We Design It For You" className="w-full h-auto rounded-3xl object-contain shadow-2xl" />
+          </div>
+
+          {/* Step 3 Full Image */}
+          <div className="w-full h-auto flex items-center justify-center">
+            <img src={step3FullImg} alt="Step 3: Create Your Digital Profile" className="w-full h-auto rounded-3xl object-contain shadow-2xl" />
+          </div>
+        </div>
+
+        {/* ── Specification Section ── */}
+        <div className="max-w-6xl mx-auto mt-20">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#A64BDF] mb-12">Specification</h2>
+          
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            {/* Left: Specs Table */}
+            <div className="flex-1 w-full space-y-6">
+              <div className="flex items-center gap-6 border-b border-white/10 pb-6">
+                <span className="icon text-3xl text-white/50 w-8">layers</span>
+                <span className="text-white/70 w-32 text-lg">Material</span>
+                <span className="text-white font-semibold text-lg flex-1">{product?.specifications?.material || 'Metal'}</span>
+              </div>
+              <div className="flex items-center gap-6 border-b border-white/10 pb-6">
+                <span className="icon text-3xl text-white/50 w-8">contactless</span>
+                <span className="text-white/70 w-32 text-lg">Technology</span>
+                <span className="text-white font-semibold text-lg flex-1">{product?.specifications?.technology || 'NFC'}</span>
+              </div>
+              <div className="flex items-center gap-6 border-b border-white/10 pb-6">
+                <span className="icon text-3xl text-white/50 w-8">devices</span>
+                <span className="text-white/70 w-32 text-lg">Compatibility</span>
+                <span className="text-white font-semibold text-lg flex-1">{product?.specifications?.compatibility || 'All NFC-enabled devices'}</span>
+              </div>
+              <div className="flex items-center gap-6 border-b border-white/10 pb-6">
+                <span className="icon text-3xl text-white/50 w-8">straighten</span>
+                <span className="text-white/70 w-32 text-lg">Dimensions</span>
+                <span className="text-white font-semibold text-lg flex-1">{product?.specifications?.dimensions || '163 x 255 mm'}</span>
+              </div>
+              <div className="flex items-center gap-6 pb-6">
+                <span className="icon text-3xl text-white/50 w-8">water_drop</span>
+                <span className="text-white/70 w-32 text-lg">Waterproof</span>
+                <span className="text-white font-semibold text-lg flex-1">{product?.specifications?.waterproof || 'Yes'}</span>
+              </div>
+            </div>
+
+            {/* Right: Dimensions Image Placeholder */}
+            <div className="flex-1 w-full flex justify-center">
+              <div className="relative w-full max-w-sm aspect-[2/3] border border-white/10 rounded-2xl bg-[#111] flex items-center justify-center shadow-2xl">
+                {/* Dimensions markings overlay (will be replaced by user's image) */}
+                <div className="absolute inset-0 flex items-center justify-center p-8">
+                  <div className="w-full h-full border-t border-r border-white/20 relative">
+                    <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-white/50 text-xs">86 mm</span>
+                    <span className="absolute -right-10 top-1/2 -translate-y-1/2 text-white/50 text-xs rotate-90">54 mm</span>
+                    <div className="w-full h-full bg-[#1A1A1A] rounded-xl flex items-center justify-center shadow-inner">
+                      <span className="text-white/20 font-bold text-2xl tracking-wider">Tapzy</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }
