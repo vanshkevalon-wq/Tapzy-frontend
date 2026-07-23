@@ -45,6 +45,7 @@ import ManageProducts from './pages/admin/ManageProducts'
 import ContactSubmissions from './pages/admin/ContactSubmissions'
 import AdminProfile from './pages/admin/AdminProfile'
 import Users from './pages/admin/Users'
+import CustomCards from './pages/admin/CustomCards'
 
 // Protected route wrapper
 function RequireAuth({ children }) {
@@ -122,6 +123,10 @@ export default function App() {
               <Route
                 path="/admin/users"
                 element={<RequireAuth><Users /></RequireAuth>}
+              />
+              <Route
+                path="/admin/custom-cards"
+                element={<RequireAuth><CustomCards /></RequireAuth>}
               />
               <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
 

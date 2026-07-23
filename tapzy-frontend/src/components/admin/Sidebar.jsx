@@ -16,6 +16,11 @@ const navItems = [
     icon: <span className="icon text-xl flex-shrink-0">inventory_2</span>,
   },
   {
+    to: '/admin/custom-cards',
+    label: 'Custom Cards',
+    icon: <span className="icon text-xl flex-shrink-0">shopping_bag</span>,
+  },
+  {
     to: '/admin/contacts',
     label: 'Contacts',
     icon: <span className="icon text-xl flex-shrink-0">mail</span>,

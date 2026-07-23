@@ -40,10 +40,10 @@ export default function PvcSmartCards() {
                 key={index}
                 className="w-[260px] sm:w-[280px] md:w-[300px] lg:w-[320px] aspect-[808/500] shrink-0 rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-[0_15px_30px_rgba(0,0,0,0.5)] transition-all duration-300"
               >
-                <img 
-                  src={imgSrc} 
-                  alt={`Tapzy PVC Smart Card ${index + 1}`} 
-                  className={`w-full h-full object-cover block ${imgSrc.includes('card-2') ? 'scale-[1.62] translate-x-[4%]' : ''}`} 
+                <img
+                  src={imgSrc}
+                  alt={`Tapzy PVC Smart Card ${index + 1}`}
+                  className={`w-full h-full object-cover block ${imgSrc.includes('card-2') ? 'scale-[1.62] translate-x-[4%]' : ''}`}
                 />
               </div>
             ))}

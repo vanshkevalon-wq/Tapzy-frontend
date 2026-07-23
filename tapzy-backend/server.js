@@ -12,6 +12,7 @@ const authRoutes    = require('./routes/authRoutes')
 const productRoutes = require('./routes/productRoutes')
 const contactRoutes = require('./routes/contactRoutes')
 const userRoutes    = require('./routes/userRoutes')
+const customCardRoutes = require('./routes/customCardRoutes')
 
 // ── Connect DB ─────────────────────────────────────────────────────────────────
 connectDB()
@@ -59,6 +60,7 @@ app.use('/api/auth',     authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/contact',  contactRoutes)
 app.use('/api/users',    userRoutes)
+app.use('/api/custom-cards', customCardRoutes)
 
 // Legacy single-image upload endpoint (kept for backwards compat)
 // POST /api/upload  { image: File }  →  { url, publicId }

@@ -6,33 +6,28 @@ import { PageLoader } from '../components/common/Loader'
 import SimilarProducts from '../components/products/SimilarProducts'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
+import neonPodiumImg from '../assets/neon-podium.png'
+import CustomCardForm from '../components/products/CustomCardForm'
 
-const features = [
-  { icon: '⚡', label: 'Instant Share', desc: 'Tap and share, no app needed' },
-  { icon: '🔄', label: 'Live Updates', desc: 'Edit your info anytime, anywhere' },
-  { icon: '📱', label: 'Universal', desc: 'Works on all modern phones' },
-  { icon: '♻️', label: 'Eco-Friendly', desc: 'One card, zero reprints ever' },
-]
-
-const specs = [
-  { label: 'Material', value: 'Premium PVC / Metal' },
-  { label: 'NFC Chip', value: 'ISO 14443-A' },
-  { label: 'Compatibility', value: 'iOS 14+ · Android 5+' },
-  { label: 'Dimensions', value: 'Standard CR80 (85.6 × 54mm)' },
-  { label: 'Delivery', value: '5–7 business days' },
+const styleColors = [
+  { name: 'Black', cls: 'bg-black' },
+  { name: 'Grey', cls: 'bg-[#4B4B4B]' },
+  { name: 'Silver', cls: 'bg-[#E0E0E0]' },
+  { name: 'Navy', cls: 'bg-[#1C2951]' },
+  { name: 'Green', cls: 'bg-[#1B4332]' },
+  { name: 'White', cls: 'bg-white' }
 ]
 
 export default function ProductDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [product, setProduct]         = useState(null)
-  const [similar, setSimilar]         = useState([])
-  const [loading, setLoading]         = useState(true)
-  const [error, setError]             = useState('')
+  const [product, setProduct] = useState(null)
+  const [similar, setSimilar] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const [activeImage, setActiveImage] = useState(null)
-  const [activeTab, setActiveTab]     = useState('overview')
-  const [zoomed, setZoomed]           = useState(false)
-  const [added, setAdded]             = useState(false)
+  const [added, setAdded] = useState(false)
+  const [selectedColor, setSelectedColor] = useState('Black')
 
   const { addToCart } = useCart()
   const { toggleWishlist, isWishlisted } = useWishlist()
@@ -46,7 +41,6 @@ export default function ProductDetail() {
   useEffect(() => {
     setLoading(true)
     setActiveImage(null)
-    setActiveTab('overview')
     api.get(`/products/${id}`)
       .then(({ data }) => {
         const p = data.product || data
@@ -58,17 +52,17 @@ export default function ProductDetail() {
       .finally(() => setLoading(false))
   }, [id])
 
-  if (loading) return <div className="bg-offwhite min-h-screen"><PageLoader /></div>
+  if (loading) return <div className="bg-[#0A0A0A] min-h-screen"><PageLoader /></div>
 
   if (error) return (
-    <div className="bg-offwhite min-h-screen flex items-center justify-center px-4">
+    <div className="bg-[#0A0A0A] min-h-screen flex items-center justify-center px-4">
       <div className="text-center">
         <div className="text-6xl mb-4">😕</div>
-        <p className="text-plum font-bold text-xl mb-2">Product not found</p>
-        <p className="text-plum/50 text-sm mb-6">{error}</p>
+        <p className="text-white font-bold text-xl mb-2">Product not found</p>
+        <p className="text-white/50 text-sm mb-6">{error}</p>
         <button
           onClick={() => navigate('/products')}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-brand-gradient shadow-glow-sm hover:shadow-glow transition-all"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white bg-[#A64BDF] shadow-lg hover:shadow-xl transition-all"
         >
           ← Back to Products
         </button>
@@ -84,287 +78,201 @@ export default function ProductDetail() {
   const fallback = 'https://placehold.co/600x600/f9f0ff/A64BDF?text=Tapzy'
   const displayImage = activeImage || fallback
 
-  return (
-    <main className="bg-offwhite min-h-screen">
-      {/* ── Top gradient accent ── */}
-      <div className="h-1.5 w-full bg-brand-gradient" />
+  const getColorFilterClass = (colorName) => {
+    switch (colorName) {
+      case 'Grey': return '[filter:brightness(1.8)_grayscale(1)]'
+      case 'Silver': return '[filter:brightness(3)_grayscale(1)]'
+      case 'White': return '[filter:brightness(5)_grayscale(1)]'
+      case 'Navy': return '[filter:brightness(2.5)_sepia(1)_hue-rotate(190deg)_saturate(3)_brightness(0.6)]'
+      case 'Green': return '[filter:brightness(2.5)_sepia(1)_hue-rotate(90deg)_saturate(3)_brightness(0.6)]'
+      case 'Black':
+      default: return ''
+    }
+  }
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  return (
+    <main className="bg-[#0A0A0A] min-h-screen text-white font-sans overflow-x-hidden pb-20 pt-[140px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs text-plum/40 mb-10 font-medium">
-          <Link to="/" className="hover:text-primary-500 transition-colors">Home</Link>
-          <span className="icon text-sm">chevron_right</span>
-          <Link to="/products" className="hover:text-primary-500 transition-colors">Products</Link>
-          <span className="icon text-sm">chevron_right</span>
-          <span className="text-plum font-semibold truncate max-w-[180px]">{product.name}</span>
+        <nav className="flex items-center gap-2 text-xs sm:text-sm text-white/60 mb-10 font-medium">
+          <Link to="/" className="hover:text-white transition-colors">Home</Link>
+          <span>/</span>
+          <Link to="/products" className="hover:text-white transition-colors">Shop</Link>
+          <span>/</span>
+          <span className="text-[#A64BDF] font-semibold truncate max-w-[200px]">{product.name}</span>
         </nav>
 
-        {/* ── Main Product Grid ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
 
-          {/* ── LEFT: Image Gallery ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55 }}
-            className="flex flex-col gap-4"
-          >
-            {/* Main image with zoom */}
-            <div
-              className={`relative bg-white rounded-3xl overflow-hidden shadow-card border border-primary-100 cursor-zoom-in transition-all duration-300 ${zoomed ? 'ring-2 ring-primary-400' : ''}`}
-              style={{ aspectRatio: '1 / 1' }}
-              onClick={() => setZoomed(!zoomed)}
-            >
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={displayImage}
-                  src={displayImage}
-                  alt={product.name}
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 1, scale: zoomed ? 1.12 : 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="w-full h-full object-cover"
-                />
-              </AnimatePresence>
-
-              {/* Zoom hint */}
-              <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-xl px-2.5 py-1.5 flex items-center gap-1.5 shadow-sm border border-primary-100">
-                <span className="icon text-plum/50" style={{ fontSize: '14px' }}>zoom_in</span>
-                <span className="text-[10px] text-plum/50 font-semibold">{zoomed ? 'Click to reset' : 'Click to zoom'}</span>
-              </div>
-
-              {/* Category badge */}
-              {product.category && (
-                <div className="absolute top-4 left-4">
-                  <span className="bg-white/95 backdrop-blur-sm text-primary-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm border border-primary-100">
-                    {product.category}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Thumbnail strip */}
-            {allImages.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-1">
-                {allImages.map((img, i) => (
-                  <button
-                    key={i}
-                    onClick={() => { setActiveImage(img.url); setZoomed(false) }}
-                    className={`flex-shrink-0 w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-200 ${
-                      activeImage === img.url
-                        ? 'border-primary-500 shadow-glow-sm scale-[1.04]'
-                        : 'border-transparent hover:border-primary-300 hover:scale-[1.02] opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={img.url} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Trust badges */}
-            <div className="grid grid-cols-3 gap-3 mt-1">
-              {[
-                { icon: '🛡️', text: 'Secure Order' },
-                { icon: '🚚', text: 'Fast Delivery' },
-                { icon: '💯', text: 'Quality Guaranteed' },
-              ].map((b) => (
-                <div key={b.text} className="flex flex-col items-center gap-1.5 bg-white rounded-2xl py-3 px-2 border border-primary-100 text-center">
-                  <span className="text-xl">{b.icon}</span>
-                  <span className="text-[10px] font-semibold text-plum/60 leading-tight">{b.text}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* ── RIGHT: Product Info ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.1 }}
-            className="flex flex-col"
-          >
-            {/* Rating row */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="icon icon-fill text-base text-yellow-400" style={{ fontSize: '16px' }}>star</span>
-                ))}
-              </div>
-              <span className="text-xs text-plum/40 font-medium">4.9 · 248 reviews</span>
-              <span className="w-1 h-1 rounded-full bg-plum/20" />
-              <span className="text-xs font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">In Stock</span>
-            </div>
-
-            {/* Product name */}
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-plum leading-tight mb-4">
-              {product.name}
-            </h1>
-
-            {/* Price block */}
-            <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-5xl font-extrabold bg-brand-gradient bg-clip-text text-transparent">
-                ₹{Number(product.price).toLocaleString('en-IN')}
-              </span>
-              <span className="text-sm text-plum/40 font-medium line-through">
-                ₹{(Number(product.price) * 1.2).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
-              </span>
-              <span className="text-xs font-bold text-green-700 bg-green-100 px-2.5 py-1 rounded-full">
-                20% OFF
-              </span>
-            </div>
-
-            {/* Description */}
-            <p className="text-plum/60 leading-relaxed text-sm mb-7 border-l-2 border-primary-200 pl-4">
-              {product.description || 'A premium NFC business card crafted for professionals who want to make every connection count. Tap once and share everything, forever.'}
-            </p>
-
-            {/* Tab switcher */}
-            <div className="flex gap-1 bg-primary-50 p-1 rounded-2xl mb-6">
-              {[
-                { id: 'overview', label: 'Overview' },
-                { id: 'specs', label: 'Specs' },
-              ].map((tab) => (
+          {/* ── LEFT: Images & Podium ── */}
+          <div className="flex flex-col sm:flex-row gap-6">
+            {/* Vertical Thumbnails */}
+            <div className="flex sm:flex-col gap-4 sm:gap-6 w-full sm:w-[100px] overflow-x-auto sm:overflow-visible pb-2 sm:pb-0 order-2 sm:order-1 flex-shrink-0 mt-4 sm:mt-8">
+              {allImages.map((img, i) => (
                 <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                    activeTab === tab.id
-                      ? 'bg-white text-primary-600 shadow-sm'
-                      : 'text-plum/50 hover:text-plum/70'
-                  }`}
+                  key={i}
+                  onClick={() => {
+                    setActiveImage(img.url)
+                    setSelectedColor('Black')
+                  }}
+                  className={`flex-shrink-0 w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] rounded-2xl overflow-hidden border-2 transition-all duration-300 ${activeImage === img.url
+                    ? 'border-[#A64BDF] scale-105 shadow-[0_0_15px_rgba(166,75,223,0.3)]'
+                    : 'border-white/10 opacity-60 hover:opacity-100 hover:border-white/30'
+                    }`}
                 >
-                  {tab.label}
+                  <img src={img.url} alt="" className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>
 
-            {/* Tab content */}
-            <AnimatePresence mode="wait">
-              {activeTab === 'overview' && (
-                <motion.div
-                  key="overview"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="grid grid-cols-2 gap-3 mb-7"
-                >
-                  {features.map((f) => (
-                    <div key={f.label} className="flex gap-3 items-start bg-primary-50 rounded-2xl p-4 border border-primary-100">
-                      <span className="text-2xl">{f.icon}</span>
-                      <div>
-                        <p className="text-xs font-bold text-plum mb-0.5">{f.label}</p>
-                        <p className="text-xs text-plum/50 leading-snug">{f.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </motion.div>
-              )}
-              {activeTab === 'specs' && (
-                <motion.div
-                  key="specs"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-white rounded-2xl border border-primary-100 overflow-hidden mb-7"
-                >
-                  {specs.map((s, i) => (
-                    <div
-                      key={s.label}
-                      className={`flex items-center justify-between px-5 py-3.5 text-sm ${
-                        i % 2 === 0 ? 'bg-white' : 'bg-primary-50/50'
-                      }`}
-                    >
-                      <span className="text-plum/50 font-medium">{s.label}</span>
-                      <span className="text-plum font-bold">{s.value}</span>
-                    </div>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Main Image with CSS Glowing Podium */}
+            <div className="relative flex-1 flex flex-col items-center justify-center min-h-[400px] sm:min-h-[550px] order-1 sm:order-2">
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 mt-auto">
-              <button
-                onClick={handleAddToCart}
-                className={`flex-1 inline-flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl font-bold text-white shadow-glow-sm hover:shadow-glow hover:scale-[1.02] active:scale-100 transition-all text-sm ${
-                  added ? 'bg-green-500' : 'bg-brand-gradient'
-                }`}
-              >
-                <span className="icon text-base leading-none">
-                  {added ? 'check_circle' : 'add_shopping_cart'}
-                </span>
-                {added ? 'Added to Cart!' : 'Add to Cart'}
-              </button>
+              {/* Static Neon Podium Image */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-20 sm:mt-32 z-10 w-[100%] sm:w-[90%] flex justify-center pointer-events-none">
+                <img
+                  src={neonPodiumImg}
+                  alt="Podium"
+                  className="w-full object-contain"
+                />
+              </div>
 
-              {/* Wishlist toggle */}
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                onClick={() => product && toggleWishlist(product)}
-                aria-label={product && isWishlisted(product._id) ? 'Remove from wishlist' : 'Add to wishlist'}
-                className={`inline-flex items-center justify-center gap-2 px-5 py-4 rounded-2xl font-bold border-2 transition-all text-sm
-                  ${product && isWishlisted(product._id)
-                    ? 'border-red-300 text-red-500 bg-red-50 hover:bg-red-100'
-                    : 'border-primary-200 text-primary-600 hover:bg-primary-50 hover:border-primary-400'
-                  }`}
-              >
-                <span className={`icon text-base leading-none ${product && isWishlisted(product._id) ? 'icon-fill' : ''}`}>
-                  favorite
-                </span>
-                {product && isWishlisted(product._id) ? 'Wishlisted' : 'Wishlist'}
-              </motion.button>
-
-              <Link
-                to="/contact"
-                className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl font-bold border-2 border-primary-200 text-primary-600 hover:bg-primary-50 hover:border-primary-400 transition-all text-center text-sm"
-              >
-                <span className="icon text-base">chat_bubble</span>
-                Ask a Question
-              </Link>
-            </div>
-
-            {/* Delivery note */}
-            <div className="flex items-center gap-2.5 mt-5 text-xs text-plum/50 font-medium">
-              <span className="icon text-primary-400 flex-shrink-0 text-base">local_shipping</span>
-              Free shipping on orders above ₹999 · Delivered in 5–7 business days
-            </div>
-          </motion.div>
-        </div>
-
-        {/* ── How it works mini strip ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-16 bg-brand-gradient rounded-3xl p-8 relative overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-hero-mesh opacity-20 pointer-events-none" />
-          <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-2xl">📦</div>
-              <p className="font-bold text-white text-sm">1. Order Online</p>
-              <p className="text-white/60 text-xs leading-relaxed max-w-[180px]">Pick your card, place your order in seconds</p>
-            </div>
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-2xl">✨</div>
-              <p className="font-bold text-white text-sm">2. We Craft It</p>
-              <p className="text-white/60 text-xs leading-relaxed max-w-[180px]">Premium materials, NFC chip pre-programmed</p>
-            </div>
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-14 h-14 rounded-2xl bg-white/20 border border-white/30 flex items-center justify-center text-2xl">🚀</div>
-              <p className="font-bold text-white text-sm">3. Start Tapping</p>
-              <p className="text-white/60 text-xs leading-relaxed max-w-[180px]">Receive, tap, and share your profile instantly</p>
+              {/* Product Image Static */}
+              <img
+                key={displayImage}
+                src={displayImage}
+                alt={product.name}
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -mt-16 sm:-mt-24 z-20 w-[280px] sm:w-[380px] object-contain drop-shadow-[0_40px_40px_rgba(0,0,0,0.8)] transition-all duration-500 ${getColorFilterClass(selectedColor)}`}
+              />
             </div>
           </div>
-        </motion.div>
 
-        {/* ── Similar Products ── */}
-        <SimilarProducts products={similar} />
+          {/* ── RIGHT: Product Info ── */}
+          <div className="flex flex-col pt-4 sm:pt-10">
+
+            {/* Badge */}
+            <div className="mb-4">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-green-900/30 border border-green-500/30 text-green-400 text-[10px] font-bold uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_2px_rgba(34,197,94,0.6)]"></span>
+                NFC Digital Card
+              </span>
+            </div>
+
+            {/* Title */}
+            <h1 className="text-4xl sm:text-[44px] font-extrabold text-white leading-tight mb-2 tracking-tight">
+              {product.name}
+            </h1>
+
+            <p className="text-white/60 text-sm mb-6">
+              Share more. Connect smarter.
+            </p>
+
+            {/* Stars */}
+            <div className="flex items-center gap-2 mb-8">
+              <div className="flex gap-0.5 text-[#FBBF24] text-lg">
+                {'★★★★★'.split('').map((s, i) => <span key={i}>{s}</span>)}
+              </div>
+              <span className="text-white/40 text-xs font-medium ml-1">4.9 (33+ reviews)</span>
+            </div>
+
+            <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-lg">
+              {product.description || 'Tapzy metal NFC cards are a premium NFC digital business card that helps you share your details, social links, and more instantly with a simple tap.'}
+            </p>
+
+            {/* Choose Style */}
+            <div className="mb-10 flex gap-4 items-center">
+              <h3 className="text-[#A64BDF] text-sm font-bold leading-tight">Choose<br />Your Style</h3>
+              <div className="flex gap-3 sm:gap-5 ml-2">
+                {styleColors.map(color => (
+                  <div key={color.name} className="flex flex-col items-center gap-2 cursor-pointer group" onClick={() => setSelectedColor(color.name)}>
+                    <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full border-[3px] transition-all duration-300 ${color.cls} ${selectedColor === color.name
+                      ? 'border-[#A64BDF] scale-110 shadow-[0_0_15px_rgba(166,75,223,0.5)]'
+                      : 'border-white/10 group-hover:border-white/30'
+                      }`}
+                    ></div>
+                    <span className={`text-[9px] sm:text-[10px] font-medium transition-colors ${selectedColor === color.name ? 'text-white' : 'text-white/40'}`}>{color.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Features Row */}
+            <div className="flex gap-6 sm:gap-12 mb-10 border-t border-b border-white/10 py-6">
+              <div className="flex flex-col items-center text-center gap-1.5 flex-1">
+                <span className="icon text-[28px] text-white font-light">contactless</span>
+                <div>
+                  <p className="text-white font-bold text-sm">NFC</p>
+                  <p className="text-white/40 text-[10px]">Tap & Share</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center gap-1.5 flex-1">
+                <span className="icon text-[28px] text-white font-light">qr_code_2</span>
+                <div>
+                  <p className="text-white font-bold text-sm">QR Code</p>
+                  <p className="text-white/40 text-[10px]">Scan & Connect</p>
+                </div>
+              </div>
+              <div className="flex flex-col items-center text-center gap-1.5 flex-1">
+                <span className="icon text-[28px] text-white font-light">link</span>
+                <div>
+                  <p className="text-white font-bold text-sm">Instant</p>
+                  <p className="text-white/40 text-[10px]">Via Link</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="flex flex-wrap items-baseline gap-3 mb-8">
+              <span className="text-3xl sm:text-4xl font-bold text-white">₹ {Number(product.price).toLocaleString('en-IN')}/-</span>
+              <span className="text-base sm:text-lg text-white/30 line-through">₹ {(Number(product.price) * 2).toLocaleString('en-IN', { maximumFractionDigits: 0 })}/-</span>
+              <span className="text-[10px] sm:text-xs text-white/30 w-full sm:w-auto mt-1 sm:mt-0">Inclusive of all taxes.</span>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-3 sm:gap-4 mt-auto">
+              <button onClick={handleAddToCart} className={`flex-[2] flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white transition-all text-sm sm:text-base ${added ? 'bg-green-500 shadow-[0_0_20px_rgba(34,197,94,0.4)]' : 'bg-[#A64BDF] hover:bg-[#8e3bc4] shadow-[0_4px_20px_rgba(166,75,223,0.3)] hover:shadow-[0_4px_25px_rgba(166,75,223,0.5)] hover:-translate-y-0.5'}`}>
+                <span className="icon text-[20px]">{added ? 'check' : 'local_mall'}</span>
+                {added ? 'Added to Cart' : 'Add to Cart'}
+              </button>
+              <button onClick={() => toggleWishlist(product)} className={`flex-1 flex items-center justify-center gap-2 px-2 sm:px-6 py-4 rounded-xl font-bold border border-white/20 transition-all text-sm sm:text-base ${product && isWishlisted(product._id) ? 'text-[#ff4d4d] border-[#ff4d4d] bg-[#ff4d4d]/10' : 'text-white hover:bg-white/5'}`}>
+                <span className={`icon text-[20px] ${product && isWishlisted(product._id) ? 'icon-fill' : ''}`}>favorite</span>
+                <span className="hidden sm:inline">Wishlist</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* ── Purple Banner ── */}
+      <div className="w-full bg-[#A64BDF] py-5 mt-16 sm:mt-24 shadow-[0_0_30px_rgba(166,75,223,0.2)] relative z-10">
+        <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-center sm:justify-between items-center text-white text-xs sm:text-sm font-semibold gap-6">
+          <div className="flex items-center gap-3">
+            <span className="icon text-[22px]">local_shipping</span>
+            Free Shipping on prepaid orders
+          </div>
+          <div className="hidden sm:block w-px h-6 bg-white/30"></div>
+          <div className="flex items-center gap-3">
+            <span className="icon text-[22px]">published_with_changes</span>
+            7-day easy returns
+          </div>
+          <div className="hidden sm:block w-px h-6 bg-white/30"></div>
+          <div className="flex items-center gap-3">
+            <span className="icon text-[22px]">verified_user</span>
+            1 year warranty
+          </div>
+        </div>
+      </div>
+
+      {/* ── Bottom Info ── */}
+      <div className="max-w-[1151px] mx-auto px-4 mt-16 sm:mt-24 text-center">
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-6">How do I customize / design my card?</h2>
+        <p className="text-white text-[16px] md:text-[20px] lg:text-[24px] leading-relaxed lg:leading-[32px] font-medium font-['Poppins',_sans-serif]">
+          Once you place your order, our design team will reach out to collect your details (your logo, name, designation, etc.) and share a design of your custom card for your approval.
+        </p>
+      </div>
+
+      <CustomCardForm />
     </main>
   )
 }

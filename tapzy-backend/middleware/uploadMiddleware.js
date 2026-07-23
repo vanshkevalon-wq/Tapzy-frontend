@@ -85,4 +85,27 @@ const uploadProductImages = [
   },
 ]
 
-module.exports = { uploadSingle, uploadProductImages, streamToCloudinary }
+/**
+ * Middleware: multer.array('images', 4) + Cloudinary upload.
+ * After this runs:
+ *   req.customCardImages = [{ url, publicId }]
+ */
+const uploadCustomCardImages = [
+  multerInstance.array('images', 4),
+  async (req, res, next) => {
+    try {
+      req.customCardImages = []
+      if (req.files?.length) {
+        req.customCardImages = await Promise.all(
+          req.files.map((f) => streamToCloudinary(f.buffer, 'tapzy/custom-cards'))
+        )
+      }
+      next()
+    } catch (err) {
+      console.error('[Upload] Cloudinary error:', err.message)
+      next(err)
+    }
+  },
+]
+
+module.exports = { uploadSingle, uploadProductImages, uploadCustomCardImages, streamToCloudinary }

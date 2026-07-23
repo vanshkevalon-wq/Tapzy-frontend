@@ -11,6 +11,9 @@ import TopPicks from '../components/home/TopPicks'
 import BrandTicker from '../components/home/BrandTicker'
 import OneIdentity from '../components/home/OneIdentity'
 import PvcSmartCards from '../components/home/PvcSmartCards'
+import Testimonials from '../components/home/Testimonials'
+import AppShowcase from '../components/home/AppShowcase'
+import NewsletterCta from '../components/home/NewsletterCta'
 
 /* ─────────────────────────────────────────
    MARQUEE  – infinite scrolling ticker
@@ -275,128 +278,23 @@ export default function Home() {
       {/* Tapzy PVC Smart Business Cards */}
       <PvcSmartCards />
 
-      {/* 4. Animated Stats */}
-      <section className="py-16 px-4 bg-brand-gradient relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <motion.div className="absolute top-0 left-1/4 w-48 h-48 rounded-full bg-white/10 blur-3xl"
-            animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 6, repeat: Infinity }}
-          />
-          <motion.div className="absolute bottom-0 right-1/4 w-40 h-40 rounded-full bg-white/10 blur-3xl"
-            animate={{ scale: [1.2, 1, 1.2] }} transition={{ duration: 6, repeat: Infinity }}
-          />
-        </div>
-        <div className="relative max-w-5xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((s, i) => <StatCard key={s.label} stat={s} index={i} />)}
-        </div>
+      {/* Eco-Friendly Banner */}
+      <section className="w-full bg-black py-8 md:py-16">
+        <img 
+          src="/eco-banner.png" 
+          alt="Small Choices Big Impact - Every order funds the planting of one tree" 
+          className="w-full h-auto object-cover"
+        />
       </section>
 
-      {/* 5. Feature Cards Grid */}
-      <FeatureCards />
+      {/* Testimonials */}
+      <Testimonials />
 
-      {/* 6. Alternating Feature Rows */}
-      <section className="py-24 px-4 bg-white overflow-hidden">
-        <div className="max-w-6xl mx-auto space-y-28">
-          {altFeatures.map((feat, i) => <AltFeatureRow key={feat.tag} feat={feat} index={i} />)}
-        </div>
-      </section>
+      {/* App Showcase */}
+      <AppShowcase />
 
-      {/* 8. Testimonials */}
-      <section className="py-24 px-4 bg-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-primary-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-lavender-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
-        <div className="relative max-w-6xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <span className="text-xs font-bold text-primary-500 uppercase tracking-widest">Testimonials</span>
-            <h2 className="text-4xl font-extrabold text-plum mt-2">Loved by professionals</h2>
-            <p className="text-plum/50 mt-2 text-sm">Real stories from real tappers.</p>
-          </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <motion.div key={t.name}
-                initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                className="relative bg-offwhite rounded-3xl p-7 border border-primary-100 hover:border-primary-200 hover:shadow-card-hover transition-all duration-300 group overflow-hidden"
-              >
-                <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full bg-primary-100/0 group-hover:bg-primary-100/40 blur-xl transition-all duration-500 pointer-events-none" />
-                <div className="absolute top-5 right-6 text-6xl text-primary-100 font-serif leading-none select-none">"</div>
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <span key={j} className="icon icon-fill text-base text-yellow-400" style={{ fontSize: '16px' }}>star</span>
-                  ))}
-                </div>
-                <p className="text-plum/65 text-sm leading-relaxed mb-6 relative z-10">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full ${t.color} text-white text-sm font-bold flex items-center justify-center shadow-glow-sm`}>{t.avatar}</div>
-                  <div>
-                    <p className="font-bold text-plum text-sm">{t.name}</p>
-                    <p className="text-plum/40 text-xs">{t.role} · {t.company}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 9. FAQ */}
-      <section className="py-20 px-4 bg-offwhite">
-        <div className="max-w-2xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-            <span className="text-xs font-bold text-primary-500 uppercase tracking-widest">FAQ</span>
-            <h2 className="text-4xl font-extrabold text-plum mt-2">Got questions?</h2>
-            <p className="text-plum/50 mt-2 text-sm">Here are the ones we hear most.</p>
-          </motion.div>
-          <div className="bg-white rounded-3xl border border-primary-100 shadow-card px-7">
-            {faqs.map(({ q, a }, i) => <FAQItem key={q} q={q} a={a} index={i} />)}
-          </div>
-          <div className="text-center mt-7">
-            <Link to="/faq" className="inline-flex items-center gap-1.5 text-primary-500 font-bold text-sm hover:text-primary-700 transition-colors">
-              See all FAQs
-              <span className="icon text-base">arrow_forward</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 10. Final CTA */}
-      <section className="py-24 px-4 bg-brand-gradient relative overflow-hidden">
-        <div className="absolute inset-0 bg-hero-mesh opacity-25 pointer-events-none" />
-        {/* decorative rings — kept well inside overflow:hidden parent */}
-        <div className="absolute -top-16 -left-16 w-48 h-48 rounded-full border border-white/10 pointer-events-none" />
-        <div className="absolute -bottom-20 -right-20 w-56 h-56 rounded-full border border-white/10 pointer-events-none" />
-        <div className="absolute top-8 right-1/3 w-2.5 h-2.5 rounded-full bg-white/30 pointer-events-none" />
-        <div className="absolute bottom-10 left-1/4 w-2 h-2 rounded-full bg-white/20 pointer-events-none" />
-        <div className="relative max-w-3xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <span className="inline-flex items-center gap-2 bg-white/15 border border-white/20 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide">
-              <motion.span className="w-1.5 h-1.5 rounded-full bg-green-400" animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 1.2, repeat: Infinity }} />
-              Join 10,000+ professionals
-            </span>
-            <h2 className="text-4xl lg:text-5xl font-extrabold text-white mb-5 leading-tight">
-              Ready to tap into<br />the future?
-            </h2>
-            <p className="text-white/70 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-              Ditch the paper. Get a Tapzy NFC card and make every introduction unforgettable.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <Link to="/products"
-                className="inline-flex items-center gap-2.5 px-9 py-4 rounded-2xl font-bold text-primary-700 bg-white shadow-card hover:scale-[1.04] hover:shadow-card-hover transition-all"
-              >
-                Order Now
-                <span className="icon text-xl">arrow_forward</span>
-              </Link>
-              <Link to="/contact"
-                className="inline-flex items-center gap-2 px-9 py-4 rounded-2xl font-bold text-white border-2 border-white/30 hover:bg-white/10 hover:border-white/50 transition-all"
-              >
-                Talk to Us
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Newsletter CTA */}
+      <NewsletterCta />
     </main>
   )
 }

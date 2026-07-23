@@ -51,7 +51,7 @@ export default function TopPicks() {
           <motion.div
             whileHover={{ y: -6 }}
             transition={{ duration: 0.3 }}
-            className="shrink-0 w-[280px] sm:w-[340px] lg:w-[400px] h-[380px] sm:h-[580px] lg:h-[550px] rounded-[20px] border border-white/10 p-5 sm:p-7 flex flex-col justify-between relative overflow-hidden snap-center shadow-xl select-none bg-[#9C9533BA]"
+            className="shrink-0 w-[280px] sm:w-[340px] lg:w-[400px] h-[380px] sm:h-[580px] lg:h-[550px] rounded-[20px] border border-white/10 p-5 sm:p-7 flex flex-col justify-between relative overflow-visible snap-center shadow-xl select-none bg-[#9C9533BA]"
           >
             {/* Top Right Star Rating (Figma: noto:star 30px x 30px + Montserrat 500 20px) */}
             <div className="absolute top-[20px] sm:top-[25px] right-[20px] sm:right-[30px] flex items-center gap-[6px] text-white font-medium text-base sm:text-[20px] tracking-[-0.015em] font-['Montserrat',sans-serif] z-30">
@@ -59,12 +59,12 @@ export default function TopPicks() {
               <span>(4.5)</span>
             </div>
 
-            {/* Visual Representation (Shifted to Left Side with Left Edge Overflow) */}
-            <div className="relative w-full pt-1 flex justify-start items-start overflow-visible select-none z-20">
+            {/* Visual Representation (Absolute Positioned) */}
+            <div className="absolute top-0 left-0 w-full h-[280px] sm:h-[360px] flex items-start justify-start pointer-events-none select-none z-20">
               <img
                 src={pvcCardsImg}
                 alt="Tapzy PVC NFC Business Cards"
-                className="w-[420px] sm:w-[540px] max-w-none h-auto object-contain filter drop-shadow-[0_25px_45px_rgba(0,0,0,0.75)] select-none transform hover:scale-[1.03] transition-transform duration-300 -ml-30 sm:-ml-40 -mt-2 sm:-mt-6"
+                className="w-[280px] sm:w-[350px] max-w-none h-auto object-contain filter drop-shadow-[0_25px_45px_rgba(0,0,0,0.75)] select-none transform -mt-10 sm:-mt-16 -ml-4 sm:-ml-6"
               />
             </div>
 
@@ -100,7 +100,7 @@ export default function TopPicks() {
           <motion.div
             whileHover={{ y: -6 }}
             transition={{ duration: 0.3 }}
-            className="shrink-0 w-[280px] sm:w-[340px] lg:w-[400px] h-[380px] sm:h-[580px] lg:h-[550px] rounded-[20px] border border-white/10 p-5 sm:p-7 flex flex-col justify-between relative overflow-hidden snap-center shadow-xl select-none bg-[linear-gradient(165deg,#4F5EE6_0%,#3542BA_45%,#18195E_100%)]"
+            className="shrink-0 w-[280px] sm:w-[340px] lg:w-[400px] h-[380px] sm:h-[580px] lg:h-[550px] rounded-[20px] border border-white/10 p-5 sm:p-7 flex flex-col justify-between relative overflow-visible snap-center shadow-xl select-none bg-[linear-gradient(165deg,#4F5EE6_0%,#3542BA_45%,#18195E_100%)]"
           >
             {/* Top Right Star Rating (Figma: noto:star 30px x 30px + Montserrat 500 20px) */}
             <div className="absolute top-[20px] sm:top-[25px] right-[20px] sm:right-[30px] flex items-center gap-[6px] text-white font-medium text-base sm:text-[20px] tracking-[-0.015em] font-['Montserrat',sans-serif] z-30">
@@ -109,7 +109,7 @@ export default function TopPicks() {
             </div>
 
             {/* Top Title & Shop Now Row (Pushed Down) */}
-            <div className="space-y-4 sm:space-y-5 z-10 pt-10 sm:pt-14 lg:pt-16">
+            <div className="space-y-4 sm:space-y-5 z-10 pt-[220px] sm:pt-[300px] lg:pt-[320px] pb-1 sm:pb-2">
               <h3 className="text-white font-bold text-2xl sm:text-3xl lg:text-[32px] leading-tight sm:leading-[38px] tracking-[-0.01em] max-w-[280px] sm:max-w-[320px] uppercase">
                 GOOGLE REVIEW<br />CARDS
               </h3>
@@ -134,12 +134,12 @@ export default function TopPicks() {
               </div>
             </div>
 
-            {/* Center/Bottom Visual (Rotated Right & Shifted Upwards) */}
-            <div className="relative w-full flex-1 flex items-end justify-center overflow-visible select-none z-10 pt-1 -mb-2 sm:mb-0">
+            {/* Center/Bottom Visual (Absolute Positioned) */}
+            <div className="absolute top-0 left-0 w-full h-[280px] sm:h-[360px] flex items-start justify-center pointer-events-none select-none z-20">
               <img
                 src={googleCardsImg}
                 alt="Tapzy Google Review Cards"
-                className="w-full max-w-[370px] sm:max-w-[450px] h-auto max-h-[350px] sm:max-h-[420px] object-contain filter drop-shadow-[0_25px_45px_rgba(0,0,0,0.7)] select-none transform rotate-6 -mt-14 sm:-mt-20 hover:scale-[1.03] transition-transform duration-300"
+                className="w-[280px] sm:w-[350px] max-w-none h-auto object-contain filter drop-shadow-[0_25px_45px_rgba(0,0,0,0.7)] select-none transform rotate-6 -mt-10 sm:-mt-16"
               />
             </div>
           </motion.div>

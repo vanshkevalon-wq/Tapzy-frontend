@@ -54,25 +54,63 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-plum text-white/70">
-      {/* Top gradient line */}
-      <div className="h-1 bg-brand-gradient" />
+    <footer className="bg-[#080808] text-[#FFFFFF] relative overflow-hidden">
+      {/* Noise background */}
+      <div className="absolute inset-0 bg-noise opacity-[0.06] mix-blend-screen pointer-events-none grayscale z-0"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      {/* Decorative T Shape */}
+      <div 
+        className="absolute bottom-0 right-0 pointer-events-none z-0 hidden lg:block translate-x-[10%] translate-y-[10%] w-[550px] h-[491px] bg-gradient-to-br from-[#A64CDF] to-[#D289D5] [mask-image:url(/t-shape.png)] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:bottom_right] [-webkit-mask-image:url(/t-shape.png)] [-webkit-mask-size:contain] [-webkit-mask-repeat:no-repeat] [-webkit-mask-position:bottom_right]"
+      ></div>
+
+      {/* Top gradient line */}
+      <div className="h-1 bg-brand-gradient relative z-10" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand */}
           <div className="md:col-span-2">
-            <TapzyLogo variant="dark" height={44} />
-            <p className="mt-3 text-sm leading-relaxed max-w-xs">
-              Smart NFC business cards that let you share everything with a single tap. No app needed. Works on all phones.
+            <TapzyLogo variant="dark" height={80} />
+            <p className="mt-4 text-[14px] leading-[22px] max-w-[435px] text-[#FFFFFF] font-normal">
+              Smarter networking starts with Tapzy. Share, connect, and grow with just one tap.
             </p>
-            <div className="flex items-center gap-3 mt-5">
+            <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
+              {/* Google Play Button */}
+              <a 
+                href="https://play.google.com/store/apps/details?id=com.tapzy.android.abc" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-4 py-2 border border-[#F9F9F9] rounded-[14px] hover:bg-white/10 transition-colors w-[180px] bg-black/20"
+              >
+                <img src="/google-play-store-icon.png" alt="Google Play" className="w-8 h-8 shrink-0 object-contain" />
+                <div className="flex flex-col items-start">
+                  <span className="text-[10px] text-white/80 leading-none mb-1">GET IT ON</span>
+                  <span className="text-[15px] font-medium text-white leading-none">Google Play</span>
+                </div>
+              </a>
+
+              {/* App Store Button */}
+              <a 
+                href="https://apps.apple.com/us/app/tapzy-digital-business-card/id6451362582" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-4 py-2 border border-[#F9F9F9] rounded-[14px] hover:bg-white/10 transition-colors w-[180px] bg-black/20"
+              >
+                <img src="/apple-icon.png" alt="Apple" className="w-8 h-8 shrink-0 object-contain" />
+                <div className="flex flex-col items-start">
+                  <span className="text-[10px] text-white/80 leading-none mb-1">Download on the</span>
+                  <span className="text-[15px] font-medium text-white leading-none">App Store</span>
+                </div>
+              </a>
+            </div>
+
+            <div className="flex items-center gap-3 mt-10">
               {socials.map(({ label, href, icon }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-white/60 hover:bg-primary-500 hover:text-white transition-all duration-200"
+                  className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center text-[#FFFFFF] hover:bg-primary-500 hover:text-white transition-all duration-200"
                 >
                   {icon}
                 </a>
@@ -136,7 +174,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40">
+        <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#FFFFFF]">
           <span>© {new Date().getFullYear()} Tapzy. All rights reserved.</span>
           <span>Built with ❤️ for the connected era</span>
         </div>
